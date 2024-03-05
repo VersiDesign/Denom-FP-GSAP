@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function() {
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-arrows__section',
-            start: 'top 90%',
+            start: 'top 70%',
             end: 'top center',
             scrub: 1,
             toggleActions: 'play none none reverse',
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .from(textWrap, {
         opacity: 0,
         ease: 'power1.inOut',
-    }, 1);
+    }, 0.5);
 }
 
     // Function to initialize all animations
