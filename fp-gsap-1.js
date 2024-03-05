@@ -192,10 +192,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Gap circles sequence
     function animateGapSection() {
-    // Set initial opacity for all targeted elements
+    // Set initial opacity for all elements
     gsap.set([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right", ".fp-gap__txt-wrap", ".fp-circle-txt"], { opacity: 0 });
 
-    // Initialize the timeline with ScrollTrigger for '.fp-gap-title__section'
+    // Initialize the timeline with ScrollTrigger for '.fp-gap__section'
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-gap-title__section",
@@ -203,18 +203,18 @@ document.addEventListener("DOMContentLoaded", function() {
             end: "top 20%",
             scrub: 1
         },
-        delay: 1.5 // Delay the start of the timeline by 1 second
+        delay: 1.5 // Delay the start of the timeline by 1.5 seconds
     });
 
     // Fade in circles together
-    tl.to([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 1, duration: 2, ease: "power1.inOut" })
-      // Start moving circles outwards in sync
-      .to(".fp-gap__circle-wrap--left", { x: "-=100vw", duration: 4, ease: "power3.inOut" }, "<")
-      .to(".fp-gap__circle-wrap--right", { x: "+=100vw", duration: 4, ease: "power3.inOut" }, "<")
-      // Fade in text inside circles
-      .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, ">-1.5")
-      // Fade in '.fp-gap__txt-wrap' after circles have started moving
-      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 1, ease: "power1.inOut" });
+    tl.to([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 1, duration: 1, ease: "power1.inOut" })
+      // Start moving circles outwards, but slow down their movement
+      .to(".fp-gap__circle-wrap--left", { x: "-=50vw", duration: 4, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--right", { x: "+=50vw", duration: 4, ease: "power3.inOut" }, "<")
+      // Fade in text inside circles earlier
+      .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "<1")
+      // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
+      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 1, ease: "power1.inOut" }, "1.5");
 }
 
     // Function to initialize all animations
