@@ -232,6 +232,41 @@ document.addEventListener("DOMContentLoaded", function() {
       .to(".fp-gap__txt-wrap", { opacity: 1, duration: 2, ease: "power1.inOut" }, "3");
 }
 
+    // Curved arrows sequence
+    function animateArrowsSection() {
+    // Target elements
+    const leftArrow = '.fp-arrow--left';
+    const rightArrow = '.fp-arrow--right';
+
+    // Animation for left arrow rotating clockwise and fading in
+    gsap.from(leftArrow, {
+        scrollTrigger: {
+            trigger: '.fp-arrows__section',
+            start: 'top center', // Adjust as needed
+            end: 'top top',
+            scrub: 1,
+            toggleActions: 'play none none reverse',
+        },
+        rotation: 180, // Starts from 180 degrees and rotates to its final state (assumed to be 0)
+        opacity: 0,
+        ease: 'power1.inOut',
+    });
+
+    // Animation for right arrow rotating anti-clockwise and fading in
+    gsap.from(rightArrow, {
+        scrollTrigger: {
+            trigger: '.fp-arrows__section',
+            start: 'top center', // Adjust as needed
+            end: 'top top',
+            scrub: 1,
+            toggleActions: 'play none none reverse',
+        },
+        rotation: -180, // Starts from -180 degrees and rotates to its final state (assumed to be 0)
+        opacity: 0,
+        ease: 'power1.inOut',
+    });
+}
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -242,6 +277,7 @@ document.addEventListener("DOMContentLoaded", function() {
         centerCircleHorizontallyAndMoveDown();
         animateGapTitleSection();
         animateGapSection();
+        animateArrowsSection();
     }
 
     setupAnimations(); // Call to initialize animations on page load
