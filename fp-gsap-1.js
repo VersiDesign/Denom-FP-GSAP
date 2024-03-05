@@ -198,24 +198,25 @@ document.addEventListener("DOMContentLoaded", function() {
             trigger: ".fp-gap__section",
             start: "top 90%",
             end: "center center",
-            scrub: 1,
-            onEnter: () => {}, // Optional, for additional actions when entering
-            onLeaveBack: () => {}, // Optional, for resetting on scroll back
+            scrub: 1
         }
     });
 
     // Set initial positions for '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' to be centered
     gsap.set([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { xPercent: -50, left: "50%" });
+    gsap.set([".fp-gap__circle-wrap--left .fp-circle-txt", ".fp-gap__circle-wrap--right .fp-circle-txt"], { opacity: 0 });
 
     // Fade in and animate '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' outwards from the center
     tl.from(".fp-gap__circle-wrap--left", { opacity: 0, x: 0, ease: "power1.out" }, 0)
-      .from(".fp-gap__circle-wrap--right", { opacity: 0, x: 0, ease: "power1.out" }, "<") // "<" to start at the same time as the left circle
+      .from(".fp-gap__circle-wrap--right", { opacity: 0, x: 0, ease: "power1.out" }, "<") // Start at the same time as the left circle
       // Fade in '.fp-gap__txt-wrap' while the circles are starting to move
-      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, 1); // Delay to start fading in as the circles begin moving
-
-    // Move the circles outward after they have faded in
-    tl.to(".fp-gap__circle-wrap--left", { x: "-150%", ease: "power1.in" }, ">")
-      .to(".fp-gap__circle-wrap--right", { x: "150%", ease: "power1.in" }, "<"); // "<" to start at the same time as the movement of the left circle
+      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, ">") // Start after circles begin to fade in
+      // Fade in text inside the circles after the parent divs finish fading in
+      .from(".fp-gap__circle-wrap--left .fp-circle-txt", { opacity: 0, ease: "power1.inOut" }, ">")
+      .from(".fp-gap__circle-wrap--right .fp-circle-txt", { opacity: 0, ease: "power1.inOut" }, "<") // Start at the same time as the left text
+      // Move the circles outward beyond the viewport after they have faded in
+      .to(".fp-gap__circle-wrap--left", { x: "-200%", ease: "power1.in" }, ">")
+      .to(".fp-gap__circle-wrap--right", { x: "200%", ease: "power1.in" }, "<"); // Start at the same time as the left circle moves
 }
 
     // Function to initialize all animations
