@@ -192,10 +192,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Gap circles sequence
     function animateGapSection() {
-    // Set initial opacity for all elements
+    // Set initial opacity for all targeted elements
     gsap.set([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right", ".fp-gap__txt-wrap", ".fp-circle-txt"], { opacity: 0 });
 
-    // Initialize the timeline with ScrollTrigger for '.fp-gap__section'
+    // Initialize the timeline with ScrollTrigger for '.fp-gap-title__section'
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-gap-title__section",
@@ -208,12 +208,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Fade in circles together
     tl.to([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 1, duration: 1, ease: "power1.inOut" })
-      // Start moving circles outwards before their fade completes
-      .to(".fp-gap__circle-wrap--left", { x: "-=100vw", duration: 2, ease: "power3.inOut" }, "<0.5")
-      .to(".fp-gap__circle-wrap--right", { x: "+=100vw", duration: 2, ease: "power3.inOut" }, "<0.5")
+      // Start moving circles outwards in sync
+      .to(".fp-gap__circle-wrap--left", { x: "-=100vw", duration: 2, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--right", { x: "+=100vw", duration: 2, ease: "power3.inOut" }, "<")
       // Fade in text inside circles
       .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, ">-1.5")
-      // Fade in text wrapper
+      // Fade in '.fp-gap__txt-wrap' after circles have started moving
       .to(".fp-gap__txt-wrap", { opacity: 1, duration: 1, ease: "power1.inOut" });
 }
 
