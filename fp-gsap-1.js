@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .from(textWrap, {
         opacity: 0,
         ease: 'power1.inOut',
-    }, 0);
+    }, 1);
 }
 
     // Function to initialize all animations
