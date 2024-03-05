@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
         scrollTrigger: {
             trigger: ".fp-gap-title__section",
             start: "top center",
-            end: "top 20%",
+            end: "bottom bottom",
             scrub: 1
         },
         delay: 1.5 // Delay the start of the timeline by 1.5 seconds
@@ -209,8 +209,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Fade in circles together
     tl.to([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 1, duration: 1, ease: "power1.inOut" })
       // Start moving circles outwards, but slow down their movement
-      .to(".fp-gap__circle-wrap--left", { x: "-=50vw", duration: 4, ease: "power3.inOut" }, "<")
-      .to(".fp-gap__circle-wrap--right", { x: "+=50vw", duration: 4, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--left", { x: "-=80vw", duration: 6, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--right", { x: "+=80vw", duration: 6, ease: "power3.inOut" }, "<")
       // Fade in text inside circles earlier
       .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "<1")
       // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
