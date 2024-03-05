@@ -203,14 +203,14 @@ document.addEventListener("DOMContentLoaded", function() {
             end: "top top",
             scrub: 1
         },
-        delay: 6 // Delay the start of the timeline
+        delay: 7 // Delay the start of the timeline
     });
 
     // Fade in circles together
     tl.to([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 1, duration: 2, ease: "power1.inOut" })
       // Start moving circles outwards, but slow down their movement
-      .to(".fp-gap__circle-wrap--left", { x: "-=70vw", duration: 6, ease: "power3.inOut" }, "<")
-      .to(".fp-gap__circle-wrap--right", { x: "+=70vw", duration: 6, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--left", { x: "-=70vw", duration: 9, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--right", { x: "+=70vw", duration: 9, ease: "power3.inOut" }, "<")
       // Fade in text inside circles
       .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "2")
       // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
