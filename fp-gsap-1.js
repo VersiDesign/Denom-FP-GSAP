@@ -195,9 +195,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the timeline with ScrollTrigger for '.fp-gap__section'
     const tl = gsap.timeline({
         scrollTrigger: {
-            trigger: ".fp-gap__section",
-            start: "top 80%",
-            end: "center center",
+            trigger: "fp-gap-title__section",
+            start: "top center",
+            end: "top 20%",
             scrub: 1
         }
     });
