@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const circleRect = circle3.getBoundingClientRect();
             const targetX = (viewportWidth / 2) - (circleFinalWidth / 2) - (circleRect.left + window.scrollX);
             // Adjust target Y based on whether the device is mobile, adding 100px for mobile
-            const targetY = isMobile ? (viewportHeight / 2) + 100 : viewportHeight; // Use half viewport height for mobile, plus an additional height
+            const targetY = isMobile ? (viewportHeight / 2) + 100 : viewportHeight - 200; // Use half viewport height for mobile, plus an additional height
 
             gsap.to(circle3, {
                 x: `+=${targetX}`,
@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
             end: "top top",
             scrub: 1
         },
-        delay: 2 // Delay the start of the timeline
+        delay: 3 // Delay the start of the timeline
     });
 
     // Fade in circles together
