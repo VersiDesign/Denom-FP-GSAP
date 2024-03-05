@@ -195,26 +195,28 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the timeline with ScrollTrigger for '.fp-gap__section'
     const tl = gsap.timeline({
         scrollTrigger: {
-            trigger: ".fp-gap-title__section", // Corrected: Added missing '.' to class selector
+            trigger: ".fp-gap-title__section", // Make sure this selector is correct
             start: "top center",
             end: "top 20%",
             scrub: 1
         }
     });
 
-    // Assuming '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' are already centered via CSS
-    // Ensure text inside the circles starts at opacity 0
-    gsap.set([".fp-gap__circle-wrap--left .fp-circle-txt", ".fp-gap__circle-wrap--right .fp-circle-txt"], { opacity: 0 });
+    // Set initial opacity for text inside the circles to 0
+    gsap.set([".fp-gap__circle-wrap--left .fp-circle-txt", ".fp-gap__circle-wrap--right .fp-circle-txt", ".fp-gap__txt-wrap"], { opacity: 0 });
 
-    // Fade in circles together and then start moving them outwards
-    tl.from([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 0, ease: "power1.out", duration: 1 }, 0)
-      // Once circles have started to fade in, begin fading in the text inside them
-      .from(".fp-circle-txt", { opacity: 0, ease: "power1.inOut", duration: 1 }, 1)
+    // Add a delay at the start of the timeline
+    const startDelay = 1; // Delay in seconds
+
+    // Fade in circles together
+    tl.from([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 0, ease: "power1.out", duration: 1 }, startDelay)
+      // Begin fading in the text inside the circles once they have started to fade in
+      .from([".fp-gap__circle-wrap--left .fp-circle-txt", ".fp-gap__circle-wrap--right .fp-circle-txt"], { opacity: 0, ease: "power1.inOut", duration: 1 }, `>${startDelay}`)
       // Fade in '.fp-gap__txt-wrap' after circles have started moving
-      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out", duration: 1 }, 2)
+      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out", duration: 1 }, `>${startDelay + 0.5}`)
       // Animate the circles outward beyond the viewport
-      .to(".fp-gap__circle-wrap--left", { x: "-=100vw", ease: "power1.in", duration: 2 }, 2)
-      .to(".fp-gap__circle-wrap--right", { x: "+=100vw", ease: "power1.in", duration: 2 }, 2);
+      .to(".fp-gap__circle-wrap--left", { x: "-=100vw", ease: "power1.in", duration: 2 }, `>${startDelay + 1}`)
+      .to(".fp-gap__circle-wrap--right", { x: "+=100vw", ease: "power1.in", duration: 2 }, `>${startDelay + 1}`);
 }
 
     // Function to initialize all animations
