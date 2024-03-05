@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
             end: "top top",
             scrub: 1
         },
-        delay: 4 // Delay the start of the timeline
+        delay: 6 // Delay the start of the timeline
     });
 
     // Fade in circles together
@@ -212,9 +212,9 @@ document.addEventListener("DOMContentLoaded", function() {
       .to(".fp-gap__circle-wrap--left", { x: "-=70vw", duration: 6, ease: "power3.inOut" }, "<")
       .to(".fp-gap__circle-wrap--right", { x: "+=70vw", duration: 6, ease: "power3.inOut" }, "<")
       // Fade in text inside circles
-      .to(".fp-circle-txt", { opacity: 1, duration: 1.5, ease: "power1.inOut" }, "2")
+      .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "2")
       // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
-      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 2, ease: "power1.inOut" }, "2");
+      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 1.5, ease: "power1.inOut" }, "3");
 }
 
     // Function to initialize all animations
