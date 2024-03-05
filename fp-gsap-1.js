@@ -237,34 +237,37 @@ document.addEventListener("DOMContentLoaded", function() {
     // Target elements
     const leftArrow = '.fp-arrow--left';
     const rightArrow = '.fp-arrow--right';
+    const textWrap = '.fp-arrows__txt-wrap';
 
-    // Animation for left arrow rotating clockwise and fading in
-    gsap.from(leftArrow, {
+    // ScrollTrigger for the entire sequence
+    gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-arrows__section',
             start: 'top 90%',
             end: 'top center',
             scrub: 1,
             toggleActions: 'play none none reverse',
-        },
+        }
+    })
+    // Fade in and rotate left arrow
+    .from(leftArrow, {
         rotation: -90,
         opacity: 0,
         ease: 'power1.inOut',
-    });
+    }, 0)
 
-    // Animation for right arrow rotating anti-clockwise and fading in
-    gsap.from(rightArrow, {
-        scrollTrigger: {
-            trigger: '.fp-arrows__section',
-            start: 'top 90%',
-            end: 'top center',
-            scrub: 1,
-            toggleActions: 'play none none reverse',
-        },
+    // Fade in and rotate right arrow
+    .from(rightArrow, {
         rotation: 90,
         opacity: 0,
         ease: 'power1.inOut',
-    });
+    }, 0)
+
+    // Fade in the text wrap in sync with the arrows
+    .from(textWrap, {
+        opacity: 0,
+        ease: 'power1.inOut',
+    }, 0);
 }
 
     // Function to initialize all animations
