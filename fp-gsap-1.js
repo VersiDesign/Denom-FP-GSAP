@@ -247,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
             scrub: 1,
             toggleActions: 'play none none reverse',
         },
-        rotation: -180,
+        rotation: -90,
         opacity: 0,
         ease: 'power1.inOut',
     });
@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function() {
             scrub: 1,
             toggleActions: 'play none none reverse',
         },
-        rotation: 180,
+        rotation: 90,
         opacity: 0,
         ease: 'power1.inOut',
     });
