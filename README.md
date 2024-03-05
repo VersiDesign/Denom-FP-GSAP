@@ -1,1 +1,1 @@
-# Denom-FP-GSAP
+Custom GSAP sequences for Denom FP Webflow page
