@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
             trigger: ".fp-gap-title__section",
             start: "top center",
             end: "top top",
-            scrub: 1
+            scrub: true
         },
         delay: 10 // Delay the start of the timeline
     });
