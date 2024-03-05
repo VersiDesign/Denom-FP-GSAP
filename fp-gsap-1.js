@@ -196,8 +196,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-gap__section",
-            start: "top center",
-            end: "bottom center",
+            start: "top 90%",
+            end: "center center",
             scrub: 1,
             onEnter: () => {}, // Optional, for additional actions when entering
             onLeaveBack: () => {}, // Optional, for resetting on scroll back
@@ -211,11 +211,11 @@ document.addEventListener("DOMContentLoaded", function() {
     tl.from(".fp-gap__circle-wrap--left", { opacity: 0, x: 0, ease: "power1.out" }, 0)
       .from(".fp-gap__circle-wrap--right", { opacity: 0, x: 0, ease: "power1.out" }, "<") // "<" to start at the same time as the left circle
       // Fade in '.fp-gap__txt-wrap' while the circles are starting to move
-      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, 0.5); // Delay to start fading in as the circles begin moving
+      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, 1); // Delay to start fading in as the circles begin moving
 
     // Move the circles outward after they have faded in
-    tl.to(".fp-gap__circle-wrap--left", { x: "-100%", ease: "power1.in" }, ">")
-      .to(".fp-gap__circle-wrap--right", { x: "100%", ease: "power1.in" }, "<"); // "<" to start at the same time as the movement of the left circle
+    tl.to(".fp-gap__circle-wrap--left", { x: "-150%", ease: "power1.in" }, ">")
+      .to(".fp-gap__circle-wrap--right", { x: "150%", ease: "power1.in" }, "<"); // "<" to start at the same time as the movement of the left circle
 }
 
     // Function to initialize all animations
