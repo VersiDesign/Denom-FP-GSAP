@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
         scrollTrigger: {
             trigger: ".fp-gap-title__section",
             start: "top center",
-            end: "bottom bottom",
+            end: "top top",
             scrub: 1
         },
         delay: 1.5 // Delay the start of the timeline by 1.5 seconds
