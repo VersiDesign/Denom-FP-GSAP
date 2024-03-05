@@ -227,9 +227,9 @@ document.addEventListener("DOMContentLoaded", function() {
       .to(".fp-gap__circle-wrap--left", { x: "-=70vw", duration: 10, ease: "power1.inOut" }, "<")
       .to(".fp-gap__circle-wrap--right", { x: "+=70vw", duration: 10, ease: "power1.inOut" }, "<")
       // Fade in text inside circles
-      .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "4")
+      .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "2")
       // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
-      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 2, ease: "power1.inOut" }, "7");
+      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 2, ease: "power1.inOut" }, "3");
 }
 
     // Function to initialize all animations
