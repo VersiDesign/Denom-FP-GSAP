@@ -204,9 +204,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Fade in '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' simultaneously
-    tl.from(".fp-gap__circle-wrap--left", { opacity: 0, ease: "power1.out" }, 0)
-      .from(".fp-gap__circle-wrap--right", { opacity: 0, ease: "power1.out" }, "<") // "<" to start at the same time as the left circle
+    // Set initial positions for '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' to be centered
+    gsap.set([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { xPercent: -50, left: "50%" });
+
+    // Fade in and animate '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' outwards from the center
+    tl.from(".fp-gap__circle-wrap--left", { opacity: 0, x: 0, ease: "power1.out" }, 0)
+      .from(".fp-gap__circle-wrap--right", { opacity: 0, x: 0, ease: "power1.out" }, "<") // "<" to start at the same time as the left circle
       // Fade in '.fp-gap__txt-wrap' while the circles are starting to move
       .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, 0.5); // Delay to start fading in as the circles begin moving
 
