@@ -192,37 +192,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Gap circles sequence
     function animateGapSection() {
-    // Create a timeline with ScrollTrigger linked to '.fp-gap__section'
-    let tl = gsap.timeline({
+    // Initialize the timeline with ScrollTrigger for '.fp-gap__section'
+    const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-gap__section",
-            start: "top center", // Adjust these values as needed
-            end: "bottom top",
+            start: "top center",
+            end: "bottom center",
             scrub: 1,
-            toggleActions: "restart pause reverse pause"
+            onEnter: () => {}, // Optional, for additional actions when entering
+            onLeaveBack: () => {}, // Optional, for resetting on scroll back
         }
     });
 
-    // Fade in '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' together
-    tl.from(".fp-gap__circle-wrap--left", { opacity: 0, x: "-100%", ease: "power1.out" }, 0)
-      .from(".fp-gap__circle-wrap--right", { opacity: 0, x: "100%", ease: "power1.out" }, 0) // Use the same start time (0) to animate together
-      // Fade in '.fp-gap__txt-wrap' while the circles are moving
-      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, 0.5); // Delay this slightly to start fading in as the circles move
+    // Fade in '.fp-gap__circle-wrap--left' and '.fp-gap__circle-wrap--right' simultaneously
+    tl.from(".fp-gap__circle-wrap--left", { opacity: 0, ease: "power1.out" }, 0)
+      .from(".fp-gap__circle-wrap--right", { opacity: 0, ease: "power1.out" }, "<") // "<" to start at the same time as the left circle
+      // Fade in '.fp-gap__txt-wrap' while the circles are starting to move
+      .from(".fp-gap__txt-wrap", { opacity: 0, ease: "power1.out" }, 0.5); // Delay to start fading in as the circles begin moving
 
-    // Optionally, if you want the circles to continue moving off screen after fading in, you can chain these animations
-    tl.to(".fp-gap__circle-wrap--left", { x: "-150%", ease: "power1.in" }, ">")
-      .to(".fp-gap__circle-wrap--right", { x: "150%", ease: "power1.in" }, "<"); // Use "<" to start at the same time as the previous animation
-}
-
-// Make sure to call this function in your setupAnimations() function
-function setupAnimations() {
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    setupGeneralAnimations(isMobile);
-    setupDiagramAnimation(isMobile ? "top 80%" : "top 60%");
-    animateCircleWithSection();
-    animateSequentialFadeIns();
-    centerCircleHorizontallyAndMoveDown(); // Ensure this is your updated function name
-    animateGapSection(); // Call the new sequence
+    // Move the circles outward after they have faded in
+    tl.to(".fp-gap__circle-wrap--left", { x: "-100%", ease: "power1.in" }, ">")
+      .to(".fp-gap__circle-wrap--right", { x: "100%", ease: "power1.in" }, "<"); // "<" to start at the same time as the movement of the left circle
 }
 
     // Function to initialize all animations
