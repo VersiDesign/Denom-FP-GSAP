@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize the timeline with ScrollTrigger for '.fp-gap__section'
     const tl = gsap.timeline({
         scrollTrigger: {
-            trigger: "fp-gap-title__section",
+            trigger: ".fp-gap-title__section", // Corrected: Added missing '.' to class selector
             start: "top center",
             end: "top 20%",
             scrub: 1
