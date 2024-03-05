@@ -242,8 +242,8 @@ document.addEventListener("DOMContentLoaded", function() {
     gsap.from(leftArrow, {
         scrollTrigger: {
             trigger: '.fp-arrows__section',
-            start: 'top center', // Adjust as needed
-            end: 'top top',
+            start: 'top 90%',
+            end: 'top center',
             scrub: 1,
             toggleActions: 'play none none reverse',
         },
@@ -256,8 +256,8 @@ document.addEventListener("DOMContentLoaded", function() {
     gsap.from(rightArrow, {
         scrollTrigger: {
             trigger: '.fp-arrows__section',
-            start: 'top center', // Adjust as needed
-            end: 'top top',
+            start: 'top 90%',
+            end: 'top center',
             scrub: 1,
             toggleActions: 'play none none reverse',
         },
