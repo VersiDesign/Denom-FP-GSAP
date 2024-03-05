@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const circleRect = circle3.getBoundingClientRect();
             const targetX = (viewportWidth / 2) - (circleFinalWidth / 2) - (circleRect.left + window.scrollX);
             // Adjust target Y based on whether the device is mobile, adding 100px for mobile
-            const targetY = isMobile ? (viewportHeight / 2) + 10 : viewportHeight - 300; // Use half viewport height for mobile, plus an additional height
+            const targetY = isMobile ? (viewportHeight / 2) + 200 : viewportHeight - 300; // Use half viewport height for mobile, plus an additional height
 
             gsap.to(circle3, {
                 x: `+=${targetX}`,
