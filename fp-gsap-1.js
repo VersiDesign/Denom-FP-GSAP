@@ -190,6 +190,21 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 }
 
+    // Gap title sequence
+    function animateGapTitleSection() {
+    gsap.from('.fp-gap__title-wrap', {
+        scrollTrigger: {
+            trigger: '.fp-gap-title__section',
+            start: 'top center',
+            end: 'bottom top',
+            scrub: 1,
+            toggleActions: 'play none none reverse',
+        },
+        opacity: 0,
+        ease: 'power1.inOut',
+    });
+}
+
     // Gap circles sequence
     function animateGapSection() {
     // Set initial opacity for all elements
@@ -203,14 +218,14 @@ document.addEventListener("DOMContentLoaded", function() {
             end: "top top",
             scrub: 1
         },
-        delay: 7 // Delay the start of the timeline
+        delay: 8 // Delay the start of the timeline
     });
 
     // Fade in circles together
     tl.to([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right"], { opacity: 1, duration: 2, ease: "power1.inOut" })
       // Start moving circles outwards, but slow down their movement
-      .to(".fp-gap__circle-wrap--left", { x: "-=60vw", duration: 10, ease: "power3.inOut" }, "<")
-      .to(".fp-gap__circle-wrap--right", { x: "+=60vw", duration: 10, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--left", { x: "-=70vw", duration: 14, ease: "power3.inOut" }, "<")
+      .to(".fp-gap__circle-wrap--right", { x: "+=70vw", duration: 14, ease: "power3.inOut" }, "<")
       // Fade in text inside circles
       .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "4")
       // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
@@ -225,6 +240,7 @@ document.addEventListener("DOMContentLoaded", function() {
         animateCircleWithSection();
         animateSequentialFadeIns();
         centerCircleHorizontallyAndMoveDown();
+        animateGapTitleSection();
         animateGapSection();
     }
 
