@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ModifiersPlugin);
 
     // Initial opacity settings for animations
     gsap.set([
@@ -317,30 +318,37 @@ function ClaimsTicker() {
     function floatBubbles() {
   const bubbles = document.querySelectorAll('.fp-bubbles__section > div');
 
-  bubbles.forEach((bubble) => {
-    // Random starting Y position
-    const startY = gsap.utils.random(-200, 200, 1);
-    // Random size between 200px and 350px
-    const size = gsap.utils.random(200, 350, 1);
-    // Set initial properties
-    gsap.set(bubble, { width: size, height: size, top: startY, x: '100%' });
+  bubbles.forEach((bubble, index) => {
+    // Set a unique initial right position for each bubble to prevent overlap
+    const initialRightPosition = window.innerWidth + (index * 100);
 
-    // Infinite loop animation
-    const tl = gsap.timeline({ repeat: -1 });
+    // Randomly set initial scale and opacity for each bubble
+    gsap.set(bubble, {
+      scale: gsap.utils.random(0.5, 1),
+      opacity: gsap.utils.random(0.3, 1),
+      x: initialRightPosition
+    });
 
-    tl.to(bubble, {
-      x: () => `-${window.innerWidth + size}px`, // Move bubble from right to left of the viewport
-      duration: gsap.utils.random(20, 40), // Random duration for each bubble to complete the trip
-      ease: "none"
-    }).to(bubble, {
-      y: `+=${gsap.utils.random(-200, 200, true)}`, // Random Y movement
-      opacity: gsap.utils.random(0.3, 1, true), // Random opacity
-      scale: gsap.utils.random(0.5, 1, true), // Random scale
-      duration: gsap.utils.random(5, 10), // Duration for opacity and scale transition
-      ease: "sine.inOut",
-      repeat: 1,
-      yoyo: true
-    }, 0);
+    // Continuous moving animation for each bubble
+    gsap.to(bubble, {
+      x: () => `-${window.innerWidth + bubble.offsetWidth * 2}px`, // Ensure it fully exits the screen
+      duration: gsap.utils.random(45, 60), // Slower movement for a more natural effect
+      repeat: -1, // Infinite loop
+      ease: "none",
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Ensure smooth re-entry by wrapping the position
+      }
+    });
+
+    // Continuous vertical and opacity animation for variation
+    gsap.to(bubble, {
+      y: "+=200",
+      opacity: () => gsap.utils.random(0.3, 1),
+      duration: 20,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
   });
 }
 
