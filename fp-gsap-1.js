@@ -426,6 +426,15 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           decimalPlaces: 0
         });
 
+        statCounterAnimation({
+          counterSelector: '#csr2Counter',
+          triggerSelector: '.fp-stats__section',
+          includePlus: false,
+          animationDuration: 2,
+          startPercent: 0,
+          decimalPlaces: 0
+        });
+
     }
 
     setupAnimations(); // Call to initialize animations on page load
