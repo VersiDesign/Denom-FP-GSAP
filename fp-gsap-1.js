@@ -335,7 +335,7 @@ function animateSingleBubbleContinuousEntry() {
                   if (Math.random() < 0.1) { // Adjust the probability as needed
                       gsap.to(bubble, {
                           y: `+=${gsap.utils.random(-50, 50)}`, // Smaller random y changes for smoother effect
-                          duration: 0.5, // Short duration for quick adjustments
+                          duration: 2, // Short duration for quick adjustments
                           ease: "sine.inOut"
                       });
                   }
