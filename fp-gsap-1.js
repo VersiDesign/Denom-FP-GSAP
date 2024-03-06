@@ -374,7 +374,6 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         trigger: triggerSelector,
         start: 'top center',
         end: 'bottom+=500% center',
-        markers: true, // Remove or set to false after debugging
         onEnter: () => animateCounter(counter, targetValue, includePlus, animationDuration),
         onLeave: () => {}, // Define if needed
         onLeaveBack: () => resetCounter(counter, startPercent, includePlus),
