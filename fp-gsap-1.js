@@ -312,10 +312,12 @@ function animateClaimsTicker() {
   });
 }
 
-    // Bubble sequence
 // Bubble sequence
 function animateSingleBubbleContinuousEntry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
+
+    // Set the initial position of the bubble to the right of the viewport
+    gsap.set(bubble, { x: window.innerWidth });
 
     // Define the duration for the bubble to travel across the screen
     const travelDuration = 20; // Duration in seconds
