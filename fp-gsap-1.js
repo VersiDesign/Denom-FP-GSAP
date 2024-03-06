@@ -313,25 +313,20 @@ function ClaimsTicker() {
   });
 }
 
-    // Single Bubble Floating Function
-function floatSingleBubble() {
+    // Bubble sequence
+function floatSingleBubbleQuickReentry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Ensure the bubble starts off-screen to the right. Set an initial position.
-    gsap.set(bubble, { x: `100vw` });
-
-    // Animation for continuous looping from right to left
-    const tl = gsap.timeline({ repeat: -1, defaults: { ease: "none" } });
-
-    tl.to(bubble, {
-        x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Move from right to left beyond the viewport
-        duration: 15, // Reduced duration for faster loop
-    })
-    .to(bubble, {
-        x: `100vw`, // Reset to start position off-screen to the right
-        immediateRender: false, // Prevent gsap from rendering this position on initialization
-        duration: 0, // Instantly reposition at the end of each loop
-    });
+    // Looping animation for immediate re-entry
+    gsap.timeline({ repeat: -1, defaults: { ease: "none" } })
+        .to(bubble, {
+            x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // End position beyond the left of the viewport
+            duration: 15, // Control the speed of the bubble
+            immediateRender: false, // Ensures the bubble does not render in this position when the page loads
+        })
+        .set(bubble, {
+            x: `100vw`, // Instantly set the bubble to start off-screen to the right
+        });
 }
 
     // Function to initialize all animations
@@ -347,7 +342,7 @@ function floatSingleBubble() {
         animateArrowsSection();
         ClaimsTicker();
         animateClaimsTitle();
-        floatSingleBubble();
+        floatSingleBubbleQuickReentry();
     }
 
     setupAnimations(); // Call to initialize animations on page load
