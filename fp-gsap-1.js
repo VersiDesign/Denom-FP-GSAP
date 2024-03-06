@@ -313,6 +313,52 @@ function ClaimsTicker() {
   });
 }
 
+    // Bubbles sequence
+    function floatBubbles() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const bubbles = document.querySelectorAll('.fp-bubbles__circle-wrap--bbl-1, .fp-bubbles__circle-wrap--bbl-2, .fp-bubbles__circle-wrap--bbl-3, .fp-bubbles__circle-wrap--bbl-4, .fp-bubbles__circle-wrap--bbl-5, .fp-bubbles__circle-wrap--bbl-6');
+
+    bubbles.forEach(bubble => {
+        // Randomly set initial scale and opacity
+        gsap.set(bubble, {
+            scale: gsap.utils.random(0.5, 1.75),
+            opacity: gsap.utils.random(0.3, 1, 0.1)
+        });
+
+        // Looping animation for X movement
+        const tl = gsap.timeline({
+            repeat: -1,
+            defaults: {ease: "none"}
+        });
+
+        tl.to(bubble, {
+            x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Move from right to left of the viewport
+            duration: gsap.utils.random(15, 30), // Random duration for each bubble to complete the trip
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth)) // Wrap x position
+            }
+        })
+        .fromTo(bubble, 
+            {y: "-=200px"}, 
+            {y: "+=200px", 
+            duration: gsap.utils.random(5, 10), // Smooth Y movement within the range of +/- 200px
+            repeat: -1, 
+            yoyo: true,
+            ease: "sine.inOut"
+        }, 0);
+
+        // Randomize scale and opacity during the trip
+        tl.to(bubble, {
+            scale: () => gsap.utils.random(0.5, 1.75),
+            opacity: () => gsap.utils.random(0.3, 1, 0.1),
+            duration: gsap.utils.random(5, 10),
+            repeat: -1,
+            yoyo: true
+        }, 0);
+    });
+}
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -326,6 +372,7 @@ function ClaimsTicker() {
         animateArrowsSection();
         ClaimsTicker();
         animateClaimsTitle();
+        floatBubbles();
     }
 
     setupAnimations(); // Call to initialize animations on page load
