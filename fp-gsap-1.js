@@ -312,7 +312,7 @@ function animateClaimsTicker() {
   });
 }
 
-// Function to animate a single bubble
+// Floating bubbles
 function animateBubble(bubble) {
     // Ensure the bubble starts from the right of the screen
     gsap.set(bubble, { x: `+=${window.innerWidth}px` });
@@ -338,6 +338,17 @@ function animateBubble(bubble) {
         ease: "sine.inOut",
         repeat: -1, 
         yoyo: true
+    });
+
+    // Randomize scale and opacity for the '.fp-circle__empty--rl' within the bubble
+    const innerCircle = bubble.querySelector('.fp-circle__empty--rl');
+    gsap.to(innerCircle, {
+        scale: () => gsap.utils.random(0.5, 1.5), // Random scale between 0.5 and 1.5
+        opacity: () => gsap.utils.random(0.5, 1), // Random opacity between 0.5 and 1
+        duration: () => gsap.utils.random(5, 15), // Random duration for the scale and opacity transition
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
     });
 
     moveHorizontally(); // Start the horizontal movement
