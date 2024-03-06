@@ -365,30 +365,43 @@ function animateAllBubbles() {
 }
 
     // Stat counter sequences
-    function statCounterAnimation(selector, addPlusSign = false, duration = 2) {
-        // Get the counter element and its target value
-        const counter = document.querySelector(selector);
-        const targetValue = parseFloat(counter.getAttribute('data-target'));
+function statCounterAnimation({
+    counterSelector,
+    triggerSelector,
+    includePlus = false,
+    animationDuration = 2,
+    startPercent = 0
+}) {
+    const counter = document.querySelector(counterSelector);
+    const targetValue = parseFloat(counter.getAttribute('data-target'));
 
-        // Animation to count up to the target value
-        gsap.to(counter, {
-            duration: duration, // Use the duration parameter
-            ease: "power1.inOut",
-            textContent: targetValue,
-            snap: { textContent: 0.1 },
-            onUpdate: function() {
-                // Conditionally prepend the '+' sign based on the addPlusSign parameter
-                let displayText = addPlusSign ? `+${counter.textContent}` : `${counter.textContent}`;
-                // Always append the '%' symbol
-                counter.textContent = `${displayText}%`;
-            },
-            scrollTrigger: {
-                trigger: counter.closest('section'), // Dynamically find the closest section element
-                start: 'top center',
-                toggleActions: 'play none none reset',
-            }
-        });
-    }
+    ScrollTrigger.create({
+        trigger: triggerSelector,
+        start: 'top center',
+        onEnter: () => animateCounter(counter, targetValue, includePlus, animationDuration),
+        onEnterBack: () => animateCounter(counter, targetValue, includePlus, animationDuration),
+        onLeave: () => resetCounter(counter, startPercent),
+        onLeaveBack: () => resetCounter(counter, startPercent),
+    });
+}
+
+// Function to animate the counter
+function animateCounter(counter, targetValue, includePlus, duration) {
+    gsap.to(counter, {
+        duration: duration,
+        innerHTML: targetValue,
+        snap: { innerHTML: 0.1 },
+        ease: "power1.inOut",
+        onUpdate: function() {
+            counter.textContent = `${includePlus ? '+' : ''}${this.targets()[0].innerHTML}%`;
+        }
+    });
+}
+
+// Function to reset the counter
+function resetCounter(counter, startPercent) {
+    counter.textContent = `${includePlus ? '+' : ''}${startPercent}%`;
+}
 
     // Function to initialize all animations
     function setupAnimations() {
@@ -404,7 +417,14 @@ function animateAllBubbles() {
         animateClaimsTicker();
         animateClaimsTitle();
         animateAllBubbles();
-        statCounterAnimation('#esgCounter', true, 2);
+
+        statCounterAnimation({
+          counterSelector: '#esgCounter',
+          triggerSelector: '.fp-stats__section',
+          includePlus: true,
+          animationDuration: 2,
+          startPercent: 0
+        });
     }
 
     setupAnimations(); // Call to initialize animations on page load
