@@ -333,7 +333,7 @@ function animateBubble(bubble) {
 
     // Vertical movement with random Y position
     gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-600, 100)}`, 
+        y: `+=${gsap.utils.random(600, -100)}`, 
         duration: () => gsap.utils.random(5, 20), 
         ease: "sine.inOut",
         repeat: -1, 
