@@ -368,6 +368,8 @@ function animateAllBubbles() {
 function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent }) {
     const counter = document.querySelector(counterSelector);
     let targetValue = parseFloat(counter.getAttribute('data-target'));
+    // Determine the number of decimal places in the target value
+    const decimalPlaces = (targetValue.toString().split('.')[1] || []).length;
 
     ScrollTrigger.create({
         trigger: triggerSelector,
@@ -379,15 +381,20 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
                 innerHTML: targetValue,
                 roundProps: "innerHTML",
                 ease: "power1.inOut",
+                snap: { innerHTML: 1 / Math.pow(10, decimalPlaces) }, // Adjust for correct rounding to decimal places
                 onUpdate: function() {
-                    // Update the displayed value with the desired format
-                    counter.textContent = `${includePlus ? '+' : ''}${this.targets()[0].innerHTML}%`;
+                    // Update the displayed value with the desired format and correct rounding
+                    const formattedValue = new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: decimalPlaces,
+                        maximumFractionDigits: decimalPlaces,
+                    }).format(this.targets()[0].innerHTML);
+                    counter.textContent = `${includePlus ? '+' : ''}${formattedValue}%`;
                 }
             });
         },
         onLeaveBack: () => {
             // Reset the counter to its starting state when the user scrolls back up
-            counter.textContent = `${includePlus ? '+' : ''}${startPercent}%`;
+            counter.textContent = `${includePlus ? '+' : ''}${startPercent.toFixed(decimalPlaces)}%`;
         },
         onEnterBack: () => {
             // Optionally, replay the animation when re-entering the section from above
@@ -396,9 +403,14 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
                 innerHTML: targetValue,
                 roundProps: "innerHTML",
                 ease: "power1.inOut",
+                snap: { innerHTML: 1 / Math.pow(10, decimalPlaces) }, // Adjust for correct rounding to decimal places
                 onUpdate: function() {
                     // Ensure consistent formatting during update
-                    counter.textContent = `${includePlus ? '+' : ''}${this.targets()[0].innerHTML}%`;
+                    const formattedValue = new Intl.NumberFormat('en-US', {
+                        minimumFractionDigits: decimalPlaces,
+                        maximumFractionDigits: decimalPlaces,
+                    }).format(this.targets()[0].innerHTML);
+                    counter.textContent = `${includePlus ? '+' : ''}${formattedValue}%`;
                 }
             });
         }
@@ -421,12 +433,13 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         animateAllBubbles();
 
         statCounterAnimation({
-          counterSelector: '#esgCounter',
+          counterSelector: '#counter1',
           triggerSelector: '.fp-stats__section',
           includePlus: true,
           animationDuration: 2,
           startPercent: 0
         });
+
     }
 
     setupAnimations(); // Call to initialize animations on page load
