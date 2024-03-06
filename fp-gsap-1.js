@@ -318,7 +318,7 @@ function animateBubble(bubble) {
     gsap.set(bubble, { x: `+=${window.innerWidth}px` });
 
     // Define the duration for the bubble to travel across the screen
-    const travelDuration = gsap.utils.random(12, 60); // Randomize duration for more natural movement
+    const travelDuration = gsap.utils.random(16, 40); // Randomize duration for more natural movement
 
     // Horizontal movement
     const moveHorizontally = () => {
@@ -333,8 +333,8 @@ function animateBubble(bubble) {
 
     // Vertical movement with random Y position
     gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-350, 350)}`, 
-        duration: () => gsap.utils.random(5, 40), 
+        y: `+=${gsap.utils.random(-320, 320)}`, 
+        duration: () => gsap.utils.random(5, 30), 
         ease: "sine.inOut",
         repeat: -1, 
         yoyo: true
