@@ -325,7 +325,7 @@ function floatSingleBubble() {
 
     tl.to(bubble, {
         x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Move from right to left beyond the viewport
-        duration: 30, // Duration to complete one loop
+        duration: 15, // Reduced duration for faster loop
     })
     .to(bubble, {
         x: `100vw`, // Reset to start position off-screen to the right
