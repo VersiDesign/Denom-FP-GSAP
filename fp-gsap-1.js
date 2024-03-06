@@ -314,42 +314,48 @@ function ClaimsTicker() {
   });
 }
 
-    // Bubbles sequence
-    function floatBubbles() {
-  const bubbles = document.querySelectorAll('.fp-bubbles__section > div');
+    // Floating Bubbles Function
+function floatBubbles() {
+    const bubbles = document.querySelectorAll('.fp-bubbles__circle-wrap--bbl-1, .fp-bubbles__circle-wrap--bbl-2, .fp-bubbles__circle-wrap--bbl-3, .fp-bubbles__circle-wrap--bbl-4, .fp-bubbles__circle-wrap--bbl-5, .fp-bubbles__circle-wrap--bbl-6');
 
-  bubbles.forEach((bubble, index) => {
-    // Set a unique initial right position for each bubble to prevent overlap
-    const initialRightPosition = window.innerWidth + (index * 100);
+    bubbles.forEach(bubble => {
+        // Randomize initial scale and opacity for each bubble
+        let initialScale = gsap.utils.random(0.5, 1, true); // true for decimal values
+        let initialOpacity = gsap.utils.random(0.3, 1, true);
+        gsap.set(bubble, {
+            scale: initialScale,
+            opacity: initialOpacity
+        });
 
-    // Randomly set initial scale and opacity for each bubble
-    gsap.set(bubble, {
-      scale: gsap.utils.random(0.5, 1),
-      opacity: gsap.utils.random(0.3, 1),
-      x: initialRightPosition
+        // Looping animation for X and Y movement
+        gsap.timeline({
+            repeat: -1,
+            defaults: {ease: "none"}
+        })
+        .to(bubble, {
+            x: () => `-${window.innerWidth + bubble.offsetWidth * 2}px`, // Ensure it exits fully off-screen to the left
+            duration: gsap.utils.random(20, 40), // Duration for one complete trip across the viewport
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Wrap x position
+            },
+            ease: "linear"
+        })
+        .fromTo(bubble, 
+            {y: "-=100px"}, 
+            {y: "+=100px", 
+                duration: gsap.utils.random(10, 20), // Random duration for Y movement
+                repeat: -1, 
+                yoyo: true,
+                ease: "sine.inOut"
+            }, "<") // Start Y animation at the same time as X
+        .to(bubble, {
+            scale: () => gsap.utils.random(0.5, 1, true),
+            opacity: () => gsap.utils.random(0.3, 1, true),
+            duration: gsap.utils.random(5, 10),
+            repeat: -1,
+            yoyo: true
+        }, "<"); // Start scale and opacity animation at the same time as X and Y
     });
-
-    // Continuous moving animation for each bubble
-    gsap.to(bubble, {
-      x: () => `-${window.innerWidth + bubble.offsetWidth * 2}px`, // Ensure it fully exits the screen
-      duration: gsap.utils.random(45, 60), // Slower movement for a more natural effect
-      repeat: -1, // Infinite loop
-      ease: "none",
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Ensure smooth re-entry by wrapping the position
-      }
-    });
-
-    // Continuous vertical and opacity animation for variation
-    gsap.to(bubble, {
-      y: "+=200",
-      opacity: () => gsap.utils.random(0.3, 1),
-      duration: 20,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
-  });
 }
 
     // Function to initialize all animations
