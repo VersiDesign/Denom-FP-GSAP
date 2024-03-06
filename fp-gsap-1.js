@@ -270,27 +270,43 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 0.5);
 }
 
-    // Function to animate the ticker
-    function animateTicker() {
-        const tickers = gsap.utils.toArray('.fp-claims__ticker div');
-        const tickerHeight = document.querySelector('.fp-claims__ticker').offsetHeight;
-        
-        tickers.forEach((ticker, i) => {
-            const tl = gsap.timeline({
-                repeat: -1, // Infinite loop
-                delay: i * 0.5, // Offset start time for each ticker
-                repeatDelay: tickers.length * 0.5 - 0.5 // Wait for all to complete + initial delay except for the last one
-            });
+    // Claims Ticker sequence
+    function ClaimsTicker() {
+    const tickerHeight = document.querySelector('.fp-claims__ticker').offsetHeight; // Get the height of the ticker container
 
-            tl.fromTo(ticker, 
-                { y: tickerHeight, opacity: 0.5 }, 
-                { y: -tickerHeight, opacity: 0.5, duration: 2, ease: "none",
-                  modifiers: {
-                    opacity: gsap.utils.mapRange(tickerHeight / 2, 0, 0.5, 1)
-                  }
-                });
+    function animateTickerItem(item, delay) {
+        const tl = gsap.timeline({
+            repeat: -1, // Infinite loop
+            delay: delay, // Start delay for each ticker item
+            defaults: { ease: 'none' } // No easing for a consistent movement
         });
+
+        tl.to(item, {
+            y: -tickerHeight, // Move up by the height of the ticker container
+            opacity: 0.5,
+            duration: 1,
+            modifiers: {
+                y: gsap.utils.unitize(y => parseFloat(y) % tickerHeight) // Ensure the y-value wraps correctly
+            }
+        })
+        .to(item, {
+            opacity: 1,
+            duration: 0.5
+        }, '-=0.5') // Start increasing opacity halfway through the movement
+        .to(item, {
+            opacity: 0.5,
+            duration: 0.5
+        });
+
+        // Reset the position and opacity for seamless looping
+        tl.set(item, { y: 0, opacity: 0.5 });
     }
+
+    const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
+    tickerItems.forEach((item, index) => {
+        animateTickerItem(item, index * 2); // Adjust the multiplier for delay to control the offset between items
+    });
+}
 
     // Function to initialize all animations
     function setupAnimations() {
@@ -303,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function() {
         animateGapTitleSection();
         animateGapSection();
         animateArrowsSection();
-        animateTicker();
+        ClaimsTicker();
     }
 
     setupAnimations(); // Call to initialize animations on page load
