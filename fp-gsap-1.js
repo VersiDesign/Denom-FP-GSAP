@@ -316,29 +316,33 @@ function animateClaimsTicker() {
 function animateSingleBubbleContinuousEntry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
+    // Ensure the bubble starts from the right of the screen
+    gsap.set(bubble, { x: `+=${window.innerWidth}px` });
+
     // Define the duration for the bubble to travel across the screen
     const travelDuration = 20; // Duration in seconds
 
-    // Animate the bubble for continuous horizontal movement
+    // Horizontal movement
+    const moveHorizontally = () => {
+        gsap.fromTo(bubble, 
+            { x: window.innerWidth }, 
+            { x: -bubble.offsetWidth, 
+              duration: travelDuration, 
+              ease: "none",
+              onComplete: moveHorizontally // Call itself to create an infinite loop
+            });
+    };
+
+    // Vertical movement with random Y position
     gsap.to(bubble, {
-        x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Ensure it travels the full viewport width before looping
-        duration: travelDuration,
-        repeat: -1, // Infinite loop
-        ease: "none",
-        onRepeat: () => {
-            // Instantly move the bubble to the right of the viewport for re-entry
-            gsap.set(bubble, { x: window.innerWidth });
-        }
+        y: `+=${gsap.utils.random(-200, 200)}`, 
+        duration: () => gsap.utils.random(2, 4), 
+        ease: "sine.inOut",
+        repeat: -1, 
+        yoyo: true
     });
 
-    // Animate for random vertical movement
-    gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-200, 200)}`, // Random vertical movement
-        duration: () => gsap.utils.random(2, 4), // Randomize the duration for vertical movement
-        ease: "sine.inOut",
-        repeat: -1, // Infinite loop
-        yoyo: true // Allow for up and down movement
-    });
+    moveHorizontally(); // Start the horizontal movement
 }
 
     // Function to initialize all animations
