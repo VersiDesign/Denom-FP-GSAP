@@ -366,25 +366,38 @@ function animateAllBubbles() {
 
     // Stat counter 1
 function startCounterAnimation() {
-    // Get the counter element and its target value
     const counter = document.querySelector('#counter');
     const targetValue = parseFloat(counter.getAttribute('data-target'));
+    let animationPlayed = false; // Flag to indicate if the animation has played
 
-    // Animation to count up to the target value
-    gsap.to(counter, {
-        duration: 2, // Duration of the count-up animation in seconds
-        ease: "power1.inOut", // Easing function for a smooth transition
-        textContent: targetValue, // Animate the textContent to the target value
-        snap: { textContent: 0.1 }, // Round to nearest 0.1 for a smooth display
+    const countUpAnimation = gsap.to(counter, {
+        duration: 2,
+        ease: "power1.inOut",
+        textContent: targetValue,
+        snap: { textContent: 0.1 },
         onUpdate: function() {
-            // Update the displayed value with a '+' sign and a '%' symbol
             counter.textContent = `+${counter.textContent}%`;
         },
-        scrollTrigger: {
-            trigger: '.fp-stats__section', // Trigger animation when this element is in view
-            start: 'top center', // Trigger point
-            toggleActions: 'play none none reset', // Play on enter, reset on reverse
-        }
+        paused: true, // Initially pause the animation
+    });
+
+    ScrollTrigger.create({
+        trigger: '.fp-stats__section',
+        start: 'top center',
+        end: "bottom top",
+        onEnter: () => {
+            if (!animationPlayed) {
+                countUpAnimation.play();
+                animationPlayed = true; // Mark as played
+            }
+        },
+        onLeaveBack: () => {
+            if (!animationPlayed) {
+                // Only reset if the animation hasn't played through once
+                countUpAnimation.progress(0).pause();
+            }
+        },
+        // Consider removing onLeave if you don't want it to reset when scrolling past downwards
     });
 }
 
