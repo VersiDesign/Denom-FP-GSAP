@@ -317,25 +317,22 @@ function ClaimsTicker() {
 function floatSingleBubble() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Calculate total movement distance including the bubble's own width to ensure it fully exits the screen
-    const totalDistance = window.innerWidth + bubble.offsetWidth;
+    // Ensure the bubble starts off-screen to the right. Set an initial position.
+    gsap.set(bubble, { x: `100vw` });
 
-    // Infinite loop animation for the bubble
-    gsap.to(bubble, {
-        x: () => `-${totalDistance}px`, // Move from right to fully left of the viewport
-        duration: 20, // Adjust duration for speed of movement
-        repeat: -1, // Infinite loop
-        ease: "none", // Linear movement
-        modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % (totalDistance + bubble.offsetWidth)) // Ensure continuous loop
-        },
-        onRepeat: () => {
-            // Reset position to just beyond the right of the viewport at the start of each repeat
-            gsap.set(bubble, {x: window.innerWidth});
-        }
+    // Animation for continuous looping from right to left
+    const tl = gsap.timeline({ repeat: -1, defaults: { ease: "none" } });
+
+    tl.to(bubble, {
+        x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Move from right to left beyond the viewport
+        duration: 30, // Duration to complete one loop
+    })
+    .to(bubble, {
+        x: `100vw`, // Reset to start position off-screen to the right
+        immediateRender: false, // Prevent gsap from rendering this position on initialization
+        duration: 0, // Instantly reposition at the end of each loop
     });
 }
-
 
     // Function to initialize all animations
     function setupAnimations() {
