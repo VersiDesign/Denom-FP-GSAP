@@ -375,6 +375,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         start: 'top center',
         end: 'bottom top',
         onEnter: () => {
+            // Play counting animation
             gsap.to(counter, {
                 duration: animationDuration,
                 innerHTML: targetValue,
@@ -386,12 +387,15 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
                 }
             });
         },
+        onLeave: () => {
+            // Ensure the counter does not reset when simply scrolling past the section
+        },
         onLeaveBack: () => {
-            // Reset the counter text to its initial state
+            // Reset the counter if the user scrolls back up past the section
             counter.textContent = (includePlus ? '+' : '') + startPercent + '%';
         },
         onEnterBack: () => {
-            // Optionally, replay the animation when entering back
+            // Replay the counting animation when entering back from the top
             gsap.to(counter, {
                 duration: animationDuration,
                 innerHTML: targetValue,
