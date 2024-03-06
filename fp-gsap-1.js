@@ -367,47 +367,36 @@ function animateAllBubbles() {
     // Stat counter sequences
 function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent }) {
     const counter = document.querySelector(counterSelector);
-    const targetValue = parseFloat(counter.dataset.target);
+    const targetValue = parseFloat(counter.getAttribute('data-target'));
 
-    // Setup ScrollTrigger
+    // Debugging: Enable markers to see the trigger points
     ScrollTrigger.create({
         trigger: triggerSelector,
         start: 'top center',
         end: 'bottom top',
-        onEnter: () => {
-            // Play counting animation
-            gsap.to(counter, {
-                duration: animationDuration,
-                innerHTML: targetValue,
-                roundProps: "innerHTML",
-                ease: "power1.inOut",
-                snap: { innerHTML: 0.1 },
-                onUpdate: function() {
-                    counter.textContent = (includePlus ? '+' : '') + parseFloat(counter.innerHTML).toFixed(1) + '%';
-                }
-            });
-        },
-        onLeave: () => {
-            // Ensure the counter does not reset when simply scrolling past the section
-        },
-        onLeaveBack: () => {
-            // Reset the counter if the user scrolls back up past the section
-            counter.textContent = (includePlus ? '+' : '') + startPercent + '%';
-        },
-        onEnterBack: () => {
-            // Replay the counting animation when entering back from the top
-            gsap.to(counter, {
-                duration: animationDuration,
-                innerHTML: targetValue,
-                roundProps: "innerHTML",
-                ease: "power1.inOut",
-                snap: { innerHTML: 0.1 },
-                onUpdate: function() {
-                    counter.textContent = (includePlus ? '+' : '') + parseFloat(counter.innerHTML).toFixed(1) + '%';
-                }
-            });
+        markers: true, // Remove or set to false after debugging
+        onEnter: () => animateCounter(counter, targetValue, includePlus, animationDuration),
+        onLeave: () => {}, // Define if needed
+        onLeaveBack: () => resetCounter(counter, startPercent, includePlus),
+        onEnterBack: () => animateCounter(counter, targetValue, includePlus, animationDuration),
+    });
+}
+
+function animateCounter(counter, targetValue, includePlus, duration) {
+    gsap.to(counter, {
+        duration: duration,
+        innerHTML: targetValue,
+        roundProps: "innerHTML",
+        ease: "power1.inOut",
+        snap: { innerHTML: 0.1 },
+        onUpdate: () => {
+            counter.textContent = `${includePlus ? '+' : ''}${counter.textContent}%`;
         }
     });
+}
+
+function resetCounter(counter, startPercent, includePlus) {
+    counter.textContent = `${includePlus ? '+' : ''}${startPercent}%`;
 }
 
     // Function to initialize all animations
