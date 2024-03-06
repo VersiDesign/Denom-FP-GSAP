@@ -333,8 +333,8 @@ function animateBubble(bubble) {
 
     // Vertical movement with random Y position
     gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-300, 300)}`, 
-        duration: () => gsap.utils.random(5, 30), 
+        y: `+=${gsap.utils.random(-350, 350)}`, 
+        duration: () => gsap.utils.random(5, 40), 
         ease: "sine.inOut",
         repeat: -1, 
         yoyo: true
@@ -343,9 +343,9 @@ function animateBubble(bubble) {
     // Randomize scale and opacity for the '.fp-circle__empty--rl' within the bubble
     const innerCircle = bubble.querySelector('.fp-circle__empty--rl');
     gsap.to(innerCircle, {
-        scale: () => gsap.utils.random(0.6, 1.5), // Random scale between 0.5 and 1.5
+        scale: () => gsap.utils.random(0.6, 1.6), // Random scale between 0.5 and 1.5
         opacity: () => gsap.utils.random(0.4, 1), // Random opacity between 0.5 and 1
-        duration: () => gsap.utils.random(4, 17), // Random duration for the scale and opacity transition
+        duration: () => gsap.utils.random(4, 20), // Random duration for the scale and opacity transition
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
