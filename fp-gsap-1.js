@@ -272,43 +272,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Claims Ticker sequence
     function ClaimsTicker() {
-    // Target all ticker items
     const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
+    const tickerHeight = 200; // Height of '.fp-claims__ticker' container
+    const duration = 5; // Total duration for one cycle of a single item
+    const staggerDelay = 1; // Delay between each item's animation start
 
-    // Animation duration for each ticker item
-    const duration = 5; // Example duration, adjust as needed
+    // Calculate total animation cycle time including stagger delays
+    const totalCycleTime = duration + (staggerDelay * (tickerItems.length - 1));
 
-    // Distance to move (which could be the height of the ticker container)
-    const moveDistance = 200; // As '.fp-claims__ticker' is now 200px in height
-
-    // Loop through each ticker item and create a looping animation
     tickerItems.forEach((item, index) => {
-        const startPos = index * moveDistance / tickerItems.length; // Calculate start position for each item
+        // Calculate the delay offset for each item based on its index
+        const delayOffset = staggerDelay * index;
 
-        // Create a timeline for infinite looping
-        const tl = gsap.timeline({
+        // Calculate the end position (negative value for upward movement)
+        const endPosition = -(tickerHeight + item.offsetHeight); // Move up beyond the container height
+
+        // Animate each item
+        gsap.to(item, {
+            y: endPosition,
+            opacity: [0.5, 1, 0.5], // Start, mid, and end opacity values
+            ease: "none",
+            duration: duration,
             repeat: -1, // Infinite loop
-            defaults: { ease: "none" }, // No easing for a smooth continuous loop
+            repeatDelay: totalCycleTime - duration, // Wait for other items to animate before repeating
+            delay: delayOffset // Start after the previous item has moved a bit
         });
-
-        // Initial setup for each ticker item
-        gsap.set(item, { y: startPos, opacity: 0.5 });
-
-        // Sequence of animations for the ticker item
-        tl.to(item, {
-            y: `-=${moveDistance}`, // Move up by the container's height
-            opacity: 1,
-            duration: (duration / tickerItems.length) * 2, // Adjust duration based on the number of items
-            immediateRender: false,
-        }).to(item, {
-            y: `-=${moveDistance}`, // Continue moving up beyond the initial move to reset
-            opacity: 0.5,
-            duration: (duration / tickerItems.length) * (tickerItems.length - 1),
-            immediateRender: false,
-        });
-
-        // Reset item to start position after completing each cycle
-        tl.set(item, { y: startPos });
     });
 }
 
