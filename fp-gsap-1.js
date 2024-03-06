@@ -272,39 +272,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Claims Ticker sequence
     function ClaimsTicker() {
-    const tickerHeight = document.querySelector('.fp-claims__ticker').offsetHeight; // Get the height of the ticker container
+    // Assuming .fp-claims__ticker height is now a fixed value of 200px
+    const tickerHeight = 200; // Height of the ticker container
 
-    function animateTickerItem(item, delay) {
-        const tl = gsap.timeline({
+    gsap.set('.fp-claims__ticker > div', { y: tickerHeight, opacity: 0.5 }); // Set initial position and opacity
+
+    gsap.to('.fp-claims__ticker > div', {
+        y: -tickerHeight,
+        opacity: 1,
+        ease: "none",
+        duration: 5,
+        stagger: {
+            each: 1.25, // Delay start for each div
             repeat: -1, // Infinite loop
-            delay: delay, // Start delay for each ticker item
-            defaults: { ease: 'none' } // No easing for a consistent movement
-        });
-
-        tl.to(item, {
-            y: -tickerHeight, // Move up by the height of the ticker container
-            opacity: 0.5,
-            duration: 1,
-            modifiers: {
-                y: gsap.utils.unitize(y => parseFloat(y) % tickerHeight) // Ensure the y-value wraps correctly
-            }
-        })
-        .to(item, {
-            opacity: 1,
-            duration: 0.5
-        }, '-=0.5') // Start increasing opacity halfway through the movement
-        .to(item, {
-            opacity: 0.5,
-            duration: 0.5
-        });
-
-        // Reset the position and opacity for seamless looping
-        tl.set(item, { y: 0, opacity: 0.5 });
-    }
-
-    const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
-    tickerItems.forEach((item, index) => {
-        animateTickerItem(item, index * 2); // Adjust the multiplier for delay to control the offset between items
+            yoyo: true, // Go back to the initial state
+        },
+        modifiers: {
+            y: gsap.utils.unitize(y => parseFloat(y) % tickerHeight) // Ensure y-value wraps correctly for looping
+        },
     });
 }
 
