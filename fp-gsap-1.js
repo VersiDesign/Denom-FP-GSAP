@@ -433,7 +433,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         animateAllBubbles();
 
         statCounterAnimation({
-          counterSelector: '#counter1',
+          counterSelector: '#esgCounter',
           triggerSelector: '.fp-stats__section',
           includePlus: true,
           animationDuration: 2,
