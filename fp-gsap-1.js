@@ -270,6 +270,28 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 0.5);
 }
 
+    // Function to animate the ticker
+    function animateTicker() {
+        const tickers = gsap.utils.toArray('.fp-claims__ticker div');
+        const tickerHeight = document.querySelector('.fp-claims__ticker').offsetHeight;
+        
+        tickers.forEach((ticker, i) => {
+            const tl = gsap.timeline({
+                repeat: -1, // Infinite loop
+                delay: i * 0.5, // Offset start time for each ticker
+                repeatDelay: tickers.length * 0.5 - 0.5 // Wait for all to complete + initial delay except for the last one
+            });
+
+            tl.fromTo(ticker, 
+                { y: tickerHeight, opacity: 0.5 }, 
+                { y: -tickerHeight, opacity: 0.5, duration: 2, ease: "none",
+                  modifiers: {
+                    opacity: gsap.utils.mapRange(tickerHeight / 2, 0, 0.5, 1)
+                  }
+                });
+        });
+    }
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -281,6 +303,7 @@ document.addEventListener("DOMContentLoaded", function() {
         animateGapTitleSection();
         animateGapSection();
         animateArrowsSection();
+        animateTicker();
     }
 
     setupAnimations(); // Call to initialize animations on page load
