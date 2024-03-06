@@ -313,6 +313,30 @@ function ClaimsTicker() {
   });
 }
 
+    // Single Bubble Floating Function
+function floatSingleBubble() {
+    const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
+
+    // Calculate total movement distance including the bubble's own width to ensure it fully exits the screen
+    const totalDistance = window.innerWidth + bubble.offsetWidth;
+
+    // Infinite loop animation for the bubble
+    gsap.to(bubble, {
+        x: () => `-${totalDistance}px`, // Move from right to fully left of the viewport
+        duration: 20, // Adjust duration for speed of movement
+        repeat: -1, // Infinite loop
+        ease: "none", // Linear movement
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (totalDistance + bubble.offsetWidth)) // Ensure continuous loop
+        },
+        onRepeat: () => {
+            // Reset position to just beyond the right of the viewport at the start of each repeat
+            gsap.set(bubble, {x: window.innerWidth});
+        }
+    });
+}
+
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -326,6 +350,7 @@ function ClaimsTicker() {
         animateArrowsSection();
         ClaimsTicker();
         animateClaimsTitle();
+        floatSingleBubble();
     }
 
     setupAnimations(); // Call to initialize animations on page load
