@@ -329,18 +329,19 @@ function animateSingleBubbleContinuousEntry() {
             { x: -bubble.offsetWidth, 
               duration: travelDuration, 
               ease: "none",
-              onComplete: moveHorizontally // Call itself to create an infinite loop
+              onComplete: moveHorizontally, // Call itself to create an infinite loop
+              onUpdate: () => {
+                  // Randomly adjust the Y position during the animation
+                  if (Math.random() < 0.1) { // Adjust the probability as needed
+                      gsap.to(bubble, {
+                          y: `+=${gsap.utils.random(-50, 50)}`, // Smaller random y changes for smoother effect
+                          duration: 0.5, // Short duration for quick adjustments
+                          ease: "sine.inOut"
+                      });
+                  }
+              }
             });
     };
-
-    // Vertical movement with random Y position
-    gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-200, 200)}`, 
-        duration: () => gsap.utils.random(2, 4), 
-        ease: "sine.inOut",
-        repeat: -1, 
-        yoyo: true
-    });
 
     moveHorizontally(); // Start the horizontal movement
 }
