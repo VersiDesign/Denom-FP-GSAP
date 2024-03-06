@@ -313,21 +313,40 @@ function animateClaimsTicker() {
 }
 
     // Bubble sequence
-function floatSingleBubbleQuickReentry() {
+function animateSingleBubble() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Set the initial position of the bubble to start from beyond the right of the viewport
-    gsap.set(bubble, { x: `100vw` });
+    // Get viewport width plus the bubble width to calculate the full distance needed for the animation
+    const fullWidth = window.innerWidth + bubble.offsetWidth;
+    
+    // Randomize initial vertical position within a certain range
+    const startY = gsap.utils.random(-100, 100);
 
-    // Looping animation for X movement with immediate re-entry
-    gsap.timeline({ repeat: -1, defaults: { ease: "none" } })
-        .to(bubble, {
-            x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Move from right to left of the viewport
-            duration: 15, // Control the speed of the bubble
-        })
-        .set(bubble, {
-            x: `100vw`, // Instantly set the bubble to start off-screen to the right for immediate re-entry
-        });
+    // Set an initial random Y position
+    gsap.set(bubble, { y: startY });
+
+    // Looping animation for the bubble
+    gsap.timeline({
+        repeat: -1, // Infinite loop
+        defaults: {ease: "none"},
+        onRepeat: () => {
+            // Immediately reset to start position (right of the viewport) when the animation repeats
+            gsap.set(bubble, { x: window.innerWidth });
+        }
+    })
+    .set(bubble, { x: window.innerWidth }) // Start from the right of the viewport
+    .to(bubble, {
+        x: -bubble.offsetWidth, // Move to the left beyond the viewport
+        duration: 20, // Adjust the duration to control the speed
+        ease: "none"
+    })
+    .to(bubble, {
+        y: `+=${gsap.utils.random(-200, 200)}`, // Random Y movement
+        repeat: -1, // Repeat this part infinitely
+        yoyo: true, // Go back and forth
+        ease: "sine.inOut",
+        duration: gsap.utils.random(2, 4) // Random duration for the Y movement
+    }, 0); // Start the Y animation at the same time as the X animation
 }
 
     // Function to initialize all animations
@@ -343,7 +362,7 @@ function floatSingleBubbleQuickReentry() {
         animateArrowsSection();
         animateClaimsTicker();
         animateClaimsTitle();
-        floatSingleBubbleQuickReentry();
+        animateSingleBubble()();
     }
 
     setupAnimations(); // Call to initialize animations on page load
