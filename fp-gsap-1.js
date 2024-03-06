@@ -273,30 +273,25 @@ document.addEventListener("DOMContentLoaded", function() {
     // Claims Ticker sequence
     function ClaimsTicker() {
     const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
-    const tickerHeight = 200; // Height of '.fp-claims__ticker' container
+    const ticker = document.querySelector('.fp-claims__ticker');
     const duration = 5; // Total duration for one cycle of a single item
-    const staggerDelay = 1; // Delay between each item's animation start
-
-    // Calculate total animation cycle time including stagger delays
-    const totalCycleTime = duration + (staggerDelay * (tickerItems.length - 1));
 
     tickerItems.forEach((item, index) => {
-        // Calculate the delay offset for each item based on its index
-        const delayOffset = staggerDelay * index;
+        // Calculate the stagger delay based on index
+        const staggerDelay = (duration / tickerItems.length) * index;
 
-        // Calculate the end position (negative value for upward movement)
-        const endPosition = -(tickerHeight + item.offsetHeight); // Move up beyond the container height
-
-        // Animate each item
-        gsap.to(item, {
-            y: endPosition,
-            opacity: [0.5, 1, 0.5], // Start, mid, and end opacity values
-            ease: "none",
-            duration: duration,
+        gsap.timeline({
             repeat: -1, // Infinite loop
-            repeatDelay: totalCycleTime - duration, // Wait for other items to animate before repeating
-            delay: delayOffset // Start after the previous item has moved a bit
-        });
+            delay: staggerDelay, // Staggered start for each item
+            onRepeat: function() {
+                // This function resets the item to the bottom of the container
+                this.set(item, { y: ticker.offsetHeight });
+            }
+        })
+        .fromTo(item, 
+            { y: ticker.offsetHeight, opacity: 0.5 }, 
+            { y: -item.offsetHeight, opacity: 1, duration: duration, ease: "none" }
+        );
     });
 }
 
