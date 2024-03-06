@@ -365,42 +365,44 @@ function animateAllBubbles() {
 }
 
     // Stat counter sequences
-function statCounterAnimation({
-    counterSelector,
-    triggerSelector,
-    includePlus = false,
-    animationDuration = 2,
-    startPercent = 0
-}) {
+function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent }) {
     const counter = document.querySelector(counterSelector);
-    const targetValue = parseFloat(counter.getAttribute('data-target'));
+    let targetValue = parseFloat(counter.getAttribute('data-target'));
 
     ScrollTrigger.create({
         trigger: triggerSelector,
-        start: 'top center',
-        onEnter: () => animateCounter(counter, targetValue, includePlus, animationDuration),
-        onEnterBack: () => animateCounter(counter, targetValue, includePlus, animationDuration),
-        onLeave: () => resetCounter(counter, startPercent),
-        onLeaveBack: () => resetCounter(counter, startPercent),
-    });
-}
-
-// Function to animate the counter
-function animateCounter(counter, targetValue, includePlus, duration) {
-    gsap.to(counter, {
-        duration: duration,
-        innerHTML: targetValue,
-        snap: { innerHTML: 0.1 },
-        ease: "power1.inOut",
-        onUpdate: function() {
-            counter.textContent = `${includePlus ? '+' : ''}${this.targets()[0].innerHTML}%`;
+        start: "top center",
+        end: "bottom top",
+        onEnter: () => {
+            gsap.to(counter, {
+                duration: animationDuration,
+                innerHTML: targetValue,
+                roundProps: "innerHTML",
+                ease: "power1.inOut",
+                onUpdate: function() {
+                    // Update the displayed value with the desired format
+                    counter.textContent = `${includePlus ? '+' : ''}${this.targets()[0].innerHTML}%`;
+                }
+            });
+        },
+        onLeaveBack: () => {
+            // Reset the counter to its starting state when the user scrolls back up
+            counter.textContent = `${includePlus ? '+' : ''}${startPercent}%`;
+        },
+        onEnterBack: () => {
+            // Optionally, replay the animation when re-entering the section from above
+            gsap.to(counter, {
+                duration: animationDuration,
+                innerHTML: targetValue,
+                roundProps: "innerHTML",
+                ease: "power1.inOut",
+                onUpdate: function() {
+                    // Ensure consistent formatting during update
+                    counter.textContent = `${includePlus ? '+' : ''}${this.targets()[0].innerHTML}%`;
+                }
+            });
         }
     });
-}
-
-// Function to reset the counter
-function resetCounter(counter, startPercent) {
-    counter.textContent = `${includePlus ? '+' : ''}${startPercent}%`;
 }
 
     // Function to initialize all animations
