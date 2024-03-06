@@ -317,15 +317,17 @@ function ClaimsTicker() {
 function floatSingleBubbleQuickReentry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Looping animation for immediate re-entry
+    // Set the initial position of the bubble to start from beyond the right of the viewport
+    gsap.set(bubble, { x: `100vw` });
+
+    // Looping animation for X movement with immediate re-entry
     gsap.timeline({ repeat: -1, defaults: { ease: "none" } })
         .to(bubble, {
-            x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // End position beyond the left of the viewport
+            x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Move from right to left of the viewport
             duration: 15, // Control the speed of the bubble
-            immediateRender: false, // Ensures the bubble does not render in this position when the page loads
         })
         .set(bubble, {
-            x: `100vw`, // Instantly set the bubble to start off-screen to the right
+            x: `100vw`, // Instantly set the bubble to start off-screen to the right for immediate re-entry
         });
 }
 
