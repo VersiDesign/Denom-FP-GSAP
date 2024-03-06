@@ -365,51 +365,26 @@ function animateAllBubbles() {
 }
 
     // Stat counter 1
-function setupCounterAnimation() {
+function startCounterAnimation() {
+    // Get the counter element and its target value
     const counter = document.querySelector('#counter');
-    const startValue = 0; // Starting value for the counter
     const targetValue = parseFloat(counter.getAttribute('data-target'));
-    const duration = 2; // Duration of the animation
 
-    // Function to update the counter's text content
-    const updateCounterText = (value) => {
-        counter.textContent = `+${value.toFixed(1)}%`;
-    };
-
-    // ScrollTrigger to animate the counter
-    ScrollTrigger.create({
-        trigger: '.fp-stats__section',
-        start: 'top center',
-        end: "bottom top",
-        onEnter: () => {
-            const countUp = gsap.fromTo(counter, 
-                { innerHTML: startValue }, 
-                {
-                    innerHTML: targetValue,
-                    duration: duration,
-                    snap: { innerHTML: 0.1 }, // Snap to nearest 0.1 to avoid floating point artifacts
-                    onUpdate: () => updateCounterText(counter.innerHTML), // Update the displayed text
-                    ease: "power1.inOut"
-                }
-            );
+    // Animation to count up to the target value
+    gsap.to(counter, {
+        duration: 2, // Duration of the count-up animation in seconds
+        ease: "power1.inOut", // Easing function for a smooth transition
+        textContent: targetValue, // Animate the textContent to the target value
+        snap: { textContent: 0.1 }, // Round to nearest 0.1 for a smooth display
+        onUpdate: function() {
+            // Update the displayed value with a '+' sign and a '%' symbol
+            counter.textContent = `+${counter.textContent}%`;
         },
-        onLeaveBack: () => {
-            // Reset the counter if the user scrolls back up past the section
-            counter.textContent = '+0.0%';
-        },
-        onEnterBack: () => {
-            // Optionally, play the counting animation again if entering back
-            gsap.fromTo(counter, 
-                { innerHTML: startValue }, 
-                {
-                    innerHTML: targetValue,
-                    duration: duration,
-                    snap: { innerHTML: 0.1 }, // Ensure smooth interpolation
-                    onUpdate: () => updateCounterText(counter.innerHTML),
-                    ease: "power1.inOut"
-                }
-            );
-        },
+        scrollTrigger: {
+            trigger: '.fp-stats__section', // Trigger animation when this element is in view
+            start: 'top center', // Trigger point
+            toggleActions: 'play none none reset', // Play on enter, reset on reverse
+        }
     });
 }
 
@@ -427,7 +402,7 @@ function setupCounterAnimation() {
         animateClaimsTicker();
         animateClaimsTitle();
         animateAllBubbles();
-        setupCounterAnimation();
+        startCounterAnimation();
     }
 
     setupAnimations(); // Call to initialize animations on page load
