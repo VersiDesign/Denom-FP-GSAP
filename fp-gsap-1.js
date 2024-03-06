@@ -316,34 +316,38 @@ function animateClaimsTicker() {
 function animateSingleBubbleContinuousEntry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Ensure the bubble starts from the right of the screen
-    gsap.set(bubble, { x: `+=${window.innerWidth}px` });
-
     // Define the duration for the bubble to travel across the screen
-    const travelDuration = 20; // Duration in seconds
+    const travelDuration = 20; // Duration in seconds for horizontal travel
 
-    // Horizontal movement
-    const moveHorizontally = () => {
-        gsap.fromTo(bubble, 
-            { x: window.innerWidth }, 
-            { x: -bubble.offsetWidth, 
-              duration: travelDuration, 
-              ease: "none",
-              onComplete: moveHorizontally, // Call itself to create an infinite loop
-              onUpdate: () => {
-                  // Randomly adjust the Y position during the animation
-                  if (Math.random() < 0.2) { // Adjust the probability as needed
-                      gsap.to(bubble, {
-                          y: `+=${gsap.utils.random(-250, 250)}`, // Smaller random y changes for smoother effect
-                          duration: 1.5, // Short duration for quick adjustments
-                          ease: "sine.inOut"
-                      });
-                  }
-              }
+    // Ensure the bubble starts from the right of the screen
+    gsap.set(bubble, { x: window.innerWidth + bubble.offsetWidth });
+
+    // Horizontal movement animation
+    gsap.to(bubble, {
+        x: -bubble.offsetWidth * 2, // Move from right to left, ensuring it starts off-screen
+        duration: travelDuration,
+        repeat: -1, // Infinite loop
+        ease: "none",
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Wrap around the screen
+        }
+    });
+
+    // Vertical movement with yoyo effect for more random modulation
+    const verticalMovementDuration = gsap.utils.random(2, 5); // Random duration for vertical movement
+    gsap.to(bubble, {
+        y: "+=200", // Random vertical movement within +/- 200px range
+        duration: verticalMovementDuration,
+        yoyo: true, // Enable yoyo effect for back-and-forth movement
+        repeat: -1, // Infinite loop
+        ease: "sine.inOut",
+        onRepeat: () => {
+            // Randomize the vertical movement direction and duration on each repeat
+            gsap.set(bubble, {
+                y: gsap.utils.random(-200, 200)
             });
-    };
-
-    moveHorizontally(); // Start the horizontal movement
+        }
+    });
 }
 
     // Function to initialize all animations
