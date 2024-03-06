@@ -332,7 +332,7 @@ function animateSingleBubbleContinuousEntry() {
               onComplete: moveHorizontally, // Call itself to create an infinite loop
               onUpdate: () => {
                   // Randomly adjust the Y position during the animation
-                  if (Math.random() < 0.5) { // Adjust the probability as needed
+                  if (Math.random() < 0.2) { // Adjust the probability as needed
                       gsap.to(bubble, {
                           y: `+=${gsap.utils.random(-150, 150)}`, // Smaller random y changes for smoother effect
                           duration: 1, // Short duration for quick adjustments
