@@ -273,28 +273,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // Claims Ticker sequence
     function ClaimsTicker() {
     const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
-    const ticker = document.querySelector('.fp-claims__ticker');
-    const duration = 5; // Total duration for one cycle of a single item
+    const tickerHeight = document.querySelector('.fp-claims__ticker').offsetHeight;
 
     tickerItems.forEach((item, index) => {
         // Calculate the stagger delay based on index
-        const staggerDelay = (duration / tickerItems.length) * index;
+        const staggerDelay = index * (5 / tickerItems.length); // Adjust the time according to the number of items
 
         gsap.timeline({
-            repeat: -1, // Infinite loop
-            delay: staggerDelay, // Staggered start for each item
-            onRepeat: function() {
-                // This function resets the item to the bottom of the container
-                this.set(item, { y: ticker.offsetHeight });
-            }
+            repeat: -1, // Loop indefinitely
+            repeatDelay: staggerDelay,
+            defaults: {ease: "none"}
         })
-        .fromTo(item, 
-            { y: ticker.offsetHeight, opacity: 0.5 }, 
-            { y: 0, opacity: 1, duration: duration / 2, ease: "none" }
-        )
-        .to(item,
-            { y: -item.offsetHeight, opacity: 0.5, duration: duration / 2, ease: "none" }
-        );
+        .fromTo(item, {y: tickerHeight, opacity: 0.5}, {y: -item.offsetHeight / 2, opacity: 1, duration: 2.5}) // First half: Move up and fade to 1
+        .to(item, {y: -item.offsetHeight, opacity: 0.5, duration: 2.5}); // Second half: Continue moving up and fade back to 0.5
     });
 }
 
