@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ModifiersPlugin);
 
     // Initial opacity settings for animations
     gsap.set([
@@ -319,24 +320,24 @@ function animateSingleBubbleContinuousEntry() {
     // Define the duration for the bubble to travel across the screen
     const travelDuration = 20; // Duration in seconds
 
-    // Animate the bubble for continuous horizontal movement
+    // Animate the bubble
     gsap.to(bubble, {
-        x: () => `-${window.innerWidth + bubble.offsetWidth * 2}px`, // Ensure it travels the full viewport width plus its own width before looping
+        x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Target x position (off-screen to the left)
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Wrap around the screen
+        },
         duration: travelDuration,
         repeat: -1, // Infinite loop
         ease: "none",
+        yoyo: true,
         onRepeat: () => {
-            bubble.style.transform = 'translateX(' + window.innerWidth + 'px)'; // Immediately move to right of viewport for re-entry
+            // Adjust vertical position randomly on each loop
+            gsap.to(bubble, {
+                y: `+=${gsap.utils.random(-200, 200)}`, // Random vertical movement
+                duration: gsap.utils.random(2, 4), // Randomize the duration for vertical movement
+                ease: "sine.inOut"
+            });
         }
-    });
-
-    // Animate for random vertical movement
-    gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-200, 200)}`, // Random vertical movement
-        duration: () => gsap.utils.random(2, 4), // Randomize the duration for vertical movement
-        ease: "sine.inOut",
-        repeat: -1, // Infinite loop
-        yoyo: true // Allow for up and down movement
     });
 }
 
