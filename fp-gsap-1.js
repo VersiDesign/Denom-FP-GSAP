@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // Claims Ticker sequence
-function ClaimsTicker() {
+function animateClaimsTicker() {
     const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
     const ticker = document.querySelector('.fp-claims__ticker');
     const duration = 5; // Total duration for one cycle of a single item
@@ -297,7 +297,6 @@ function ClaimsTicker() {
 
     // Claims title fade in
     function animateClaimsTitle() {
-  gsap.registerPlugin(ScrollTrigger);
 
   gsap.from(".fp-claims__title-wrap", {
     scrollTrigger: {
@@ -342,7 +341,7 @@ function floatSingleBubbleQuickReentry() {
         animateGapTitleSection();
         animateGapSection();
         animateArrowsSection();
-        ClaimsTicker();
+        animateClaimsTicker();
         animateClaimsTitle();
         floatSingleBubbleQuickReentry();
     }
