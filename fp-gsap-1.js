@@ -413,7 +413,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           triggerSelector: '.fp-stats__section',
           includePlus: true,
           animationDuration: 2,
-          startPercent: 0.0
+          startPercent: 0.0,
+          decimalPlaces: 1
         });
 
         statCounterAnimation({
@@ -421,7 +422,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           triggerSelector: '.fp-stats__section',
           includePlus: false,
           animationDuration: 2,
-          startPercent: 0
+          startPercent: 0,
+          decimalPlaces: 0
         });
 
     }
