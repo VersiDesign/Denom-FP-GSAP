@@ -295,6 +295,24 @@ function ClaimsTicker() {
     });
 }
 
+    // Claims title fade in
+    function animateClaimsTitle() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".fp-claims__title-wrap", {
+    scrollTrigger: {
+      trigger: ".fp-claims__section",
+      start: "top center", // Animation starts when the top of `.fp-claims__section` hits the center of the viewport
+      end: "bottom center", // Animation ends when the bottom of `.fp-claims__section` hits the center of the viewport
+      scrub: 1, // Animation is controlled by scroll position
+      toggleActions: "play none none reverse", // Animation plays on enter and reverses on scroll up
+    },
+    opacity: 0, // Start the animation from opacity 0
+    duration: 1, // Duration of the fade-in effect
+    ease: "power1.inOut" // Easing function for a smooth transition
+  });
+}
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
