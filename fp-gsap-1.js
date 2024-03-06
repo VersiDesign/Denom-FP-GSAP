@@ -416,6 +416,14 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           startPercent: 0.0
         });
 
+        statCounterAnimation({
+          counterSelector: '#csrCounter',
+          triggerSelector: '.fp-stats__section',
+          includePlus: false,
+          animationDuration: 2,
+          startPercent: 0
+        });
+
     }
 
     setupAnimations(); // Call to initialize animations on page load
