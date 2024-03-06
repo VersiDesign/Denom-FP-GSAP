@@ -373,7 +373,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     ScrollTrigger.create({
         trigger: triggerSelector,
         start: 'top center',
-        end: 'bottom top',
+        end: 'bottom+=500% center',
         markers: true, // Remove or set to false after debugging
         onEnter: () => animateCounter(counter, targetValue, includePlus, animationDuration),
         onLeave: () => {}, // Define if needed
