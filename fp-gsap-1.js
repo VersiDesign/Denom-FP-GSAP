@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.registerPlugin(ModifiersPlugin);
 
     // Initial opacity settings for animations
     gsap.set([
@@ -314,50 +313,6 @@ function ClaimsTicker() {
   });
 }
 
-    // Floating Bubbles Function
-function floatBubbles() {
-    const bubbles = document.querySelectorAll('.fp-bubbles__circle-wrap--bbl-1, .fp-bubbles__circle-wrap--bbl-2, .fp-bubbles__circle-wrap--bbl-3, .fp-bubbles__circle-wrap--bbl-4, .fp-bubbles__circle-wrap--bbl-5, .fp-bubbles__circle-wrap--bbl-6');
-
-    bubbles.forEach(bubble => {
-        // Randomize initial scale and opacity for each bubble
-        let initialScale = gsap.utils.random(0.5, 1, true); // true for decimal values
-        let initialOpacity = gsap.utils.random(0.3, 1, true);
-        gsap.set(bubble, {
-            scale: initialScale,
-            opacity: initialOpacity
-        });
-
-        // Looping animation for X and Y movement
-        gsap.timeline({
-            repeat: -1,
-            defaults: {ease: "none"}
-        })
-        .to(bubble, {
-            x: () => `-${window.innerWidth + bubble.offsetWidth * 2}px`, // Ensure it exits fully off-screen to the left
-            duration: gsap.utils.random(20, 40), // Duration for one complete trip across the viewport
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Wrap x position
-            },
-            ease: "linear"
-        })
-        .fromTo(bubble, 
-            {y: "-=100px"}, 
-            {y: "+=100px", 
-                duration: gsap.utils.random(10, 20), // Random duration for Y movement
-                repeat: -1, 
-                yoyo: true,
-                ease: "sine.inOut"
-            }, "<") // Start Y animation at the same time as X
-        .to(bubble, {
-            scale: () => gsap.utils.random(0.5, 1, true),
-            opacity: () => gsap.utils.random(0.3, 1, true),
-            duration: gsap.utils.random(5, 10),
-            repeat: -1,
-            yoyo: true
-        }, "<"); // Start scale and opacity animation at the same time as X and Y
-    });
-}
-
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -371,7 +326,6 @@ function floatBubbles() {
         animateArrowsSection();
         ClaimsTicker();
         animateClaimsTitle();
-        floatBubbles();
     }
 
     setupAnimations(); // Call to initialize animations on page load
