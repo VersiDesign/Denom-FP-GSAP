@@ -318,7 +318,7 @@ function animateBubble(bubble) {
     gsap.set(bubble, { x: `+=${window.innerWidth}px` });
 
     // Define the duration for the bubble to travel across the screen
-    const travelDuration = gsap.utils.random(15, 45); // Randomize duration for more natural movement
+    const travelDuration = gsap.utils.random(15, 50); // Randomize duration for more natural movement
 
     // Horizontal movement
     const moveHorizontally = () => {
@@ -343,9 +343,9 @@ function animateBubble(bubble) {
     // Randomize scale and opacity for the '.fp-circle__empty--rl' within the bubble
     const innerCircle = bubble.querySelector('.fp-circle__empty--rl');
     gsap.to(innerCircle, {
-        scale: () => gsap.utils.random(0.5, 1.5), // Random scale between 0.5 and 1.5
-        opacity: () => gsap.utils.random(0.5, 1), // Random opacity between 0.5 and 1
-        duration: () => gsap.utils.random(5, 15), // Random duration for the scale and opacity transition
+        scale: () => gsap.utils.random(0.6, 1.5), // Random scale between 0.5 and 1.5
+        opacity: () => gsap.utils.random(0.4, 1), // Random opacity between 0.5 and 1
+        duration: () => gsap.utils.random(4, 17), // Random duration for the scale and opacity transition
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut"
