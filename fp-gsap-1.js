@@ -290,7 +290,10 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .fromTo(item, 
             { y: ticker.offsetHeight, opacity: 0.5 }, 
-            { y: -item.offsetHeight, opacity: 1, duration: duration, ease: "none" }
+            { y: 0, opacity: 1, duration: duration / 2, ease: "none" }
+        )
+        .to(item,
+            { y: -item.offsetHeight, opacity: 0.5, duration: duration / 2, ease: "none" }
         );
     });
 }
