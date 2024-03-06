@@ -364,6 +364,30 @@ function animateAllBubbles() {
     bubbles.forEach(bubble => animateBubble(bubble));
 }
 
+    // Stat counter 1
+function startCounterAnimation() {
+    // Get the counter element and its target value
+    const counter = document.querySelector('#counter');
+    const targetValue = parseFloat(counter.getAttribute('data-target'));
+
+    // Animation to count up to the target value
+    gsap.to(counter, {
+        duration: 2, // Duration of the count-up animation in seconds
+        ease: "power1.inOut", // Easing function for a smooth transition
+        textContent: targetValue, // Animate the textContent to the target value
+        snap: { textContent: 0.1 }, // Round to nearest 0.1 for a smooth display
+        onUpdate: function() {
+            // Update the displayed value with a '+' sign and a '%' symbol
+            counter.textContent = `+${counter.textContent}%`;
+        },
+        scrollTrigger: {
+            trigger: '.fp-stats__section', // Trigger animation when this element is in view
+            start: 'top center', // Trigger point
+            toggleActions: 'play none none reset', // Play on enter, reset on reverse
+        }
+    });
+}
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -378,6 +402,7 @@ function animateAllBubbles() {
         animateClaimsTicker();
         animateClaimsTitle();
         animateAllBubbles();
+        startCounterAnimation();
     }
 
     setupAnimations(); // Call to initialize animations on page load
