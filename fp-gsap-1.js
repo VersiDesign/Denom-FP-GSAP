@@ -302,7 +302,7 @@ function ClaimsTicker() {
   gsap.from(".fp-claims__title-wrap", {
     scrollTrigger: {
       trigger: ".fp-claims__section",
-      start: "top 55%",
+      start: "top 50%",
       end: "top 20%",
       scrub: 1,
       toggleActions: "play none none reverse",
