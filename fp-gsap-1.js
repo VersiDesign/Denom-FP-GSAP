@@ -272,24 +272,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Claims Ticker sequence
     function ClaimsTicker() {
-    // Assuming .fp-claims__ticker height is now a fixed value of 200px
-    const tickerHeight = 200; // Height of the ticker container
+    // Target all ticker items
+    const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
 
-    gsap.set('.fp-claims__ticker > div', { y: tickerHeight, opacity: 0.5 }); // Set initial position and opacity
+    // Animation duration for each ticker item
+    const duration = 5; // Example duration, adjust as needed
 
-    gsap.to('.fp-claims__ticker > div', {
-        y: -tickerHeight,
-        opacity: 1,
-        ease: "none",
-        duration: 5,
-        stagger: {
-            each: 1.25, // Delay start for each div
+    // Distance to move (which could be the height of the ticker container)
+    const moveDistance = 200; // As '.fp-claims__ticker' is now 200px in height
+
+    // Loop through each ticker item and create a looping animation
+    tickerItems.forEach((item, index) => {
+        const startPos = index * moveDistance / tickerItems.length; // Calculate start position for each item
+
+        // Create a timeline for infinite looping
+        const tl = gsap.timeline({
             repeat: -1, // Infinite loop
-            yoyo: true, // Go back to the initial state
-        },
-        modifiers: {
-            y: gsap.utils.unitize(y => parseFloat(y) % tickerHeight) // Ensure y-value wraps correctly for looping
-        },
+            defaults: { ease: "none" }, // No easing for a smooth continuous loop
+        });
+
+        // Initial setup for each ticker item
+        gsap.set(item, { y: startPos, opacity: 0.5 });
+
+        // Sequence of animations for the ticker item
+        tl.to(item, {
+            y: `-=${moveDistance}`, // Move up by the container's height
+            opacity: 1,
+            duration: (duration / tickerItems.length) * 2, // Adjust duration based on the number of items
+            immediateRender: false,
+        }).to(item, {
+            y: `-=${moveDistance}`, // Continue moving up beyond the initial move to reset
+            opacity: 0.5,
+            duration: (duration / tickerItems.length) * (tickerItems.length - 1),
+            immediateRender: false,
+        });
+
+        // Reset item to start position after completing each cycle
+        tl.set(item, { y: startPos });
     });
 }
 
