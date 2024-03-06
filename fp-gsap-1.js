@@ -271,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // Claims Ticker sequence
-    function ClaimsTicker() {
+function ClaimsTicker() {
     const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
     const ticker = document.querySelector('.fp-claims__ticker');
     const duration = 5; // Total duration for one cycle of a single item
@@ -289,8 +289,8 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
         .fromTo(item, 
-            { y: ticker.offsetHeight, opacity: 0.5 }, 
-            { y: -item.offsetHeight, opacity: 1, duration: duration, ease: "none" }
+            { y: ticker.offsetHeight }, 
+            { y: -item.offsetHeight, duration: duration, ease: "none" }
         );
     });
 }
