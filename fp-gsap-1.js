@@ -270,6 +270,73 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 0.5);
 }
 
+    // Claims Ticker sequence
+function ClaimsTicker() {
+    const tickerItems = document.querySelectorAll('.fp-claims__ticker > div');
+    const ticker = document.querySelector('.fp-claims__ticker');
+    const duration = 5; // Total duration for one cycle of a single item
+
+    tickerItems.forEach((item, index) => {
+        // Calculate the stagger delay based on index
+        const staggerDelay = (duration / tickerItems.length) * index;
+
+        gsap.timeline({
+            repeat: -1, // Infinite loop
+            delay: staggerDelay, // Staggered start for each item
+            onRepeat: function() {
+                // This function resets the item to the bottom of the container
+                this.set(item, { y: ticker.offsetHeight });
+            }
+        })
+        .fromTo(item, 
+            { y: ticker.offsetHeight }, 
+            { y: -item.offsetHeight, duration: duration, ease: "none" }
+        );
+    });
+}
+
+    // Claims title fade in
+    function animateClaimsTitle() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".fp-claims__title-wrap", {
+    scrollTrigger: {
+      trigger: ".fp-claims__section",
+      start: "top 50%",
+      end: "top 20%",
+      scrub: 1,
+      toggleActions: "play none none reverse",
+    },
+    opacity: 0,
+    duration: 0.5,
+    ease: "power1.inOut"
+  });
+}
+
+    // Single Bubble Floating Function
+function floatSingleBubble() {
+    const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
+
+    // Calculate total movement distance including the bubble's own width to ensure it fully exits the screen
+    const totalDistance = window.innerWidth + bubble.offsetWidth;
+
+    // Infinite loop animation for the bubble
+    gsap.to(bubble, {
+        x: () => `-${totalDistance}px`, // Move from right to fully left of the viewport
+        duration: 20, // Adjust duration for speed of movement
+        repeat: -1, // Infinite loop
+        ease: "none", // Linear movement
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (totalDistance + bubble.offsetWidth)) // Ensure continuous loop
+        },
+        onRepeat: () => {
+            // Reset position to just beyond the right of the viewport at the start of each repeat
+            gsap.set(bubble, {x: window.innerWidth});
+        }
+    });
+}
+
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -281,6 +348,9 @@ document.addEventListener("DOMContentLoaded", function() {
         animateGapTitleSection();
         animateGapSection();
         animateArrowsSection();
+        ClaimsTicker();
+        animateClaimsTitle();
+        floatSingleBubble();
     }
 
     setupAnimations(); // Call to initialize animations on page load
