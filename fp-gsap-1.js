@@ -316,20 +316,18 @@ function animateClaimsTicker() {
 function animateSingleBubbleContinuousEntry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Set the initial position of the bubble to the right of the viewport
-    gsap.set(bubble, { x: window.innerWidth });
-
     // Define the duration for the bubble to travel across the screen
     const travelDuration = 20; // Duration in seconds
 
     // Animate the bubble for continuous horizontal movement
     gsap.to(bubble, {
-        x: () => `-${window.innerWidth + bubble.offsetWidth * 2}px`, // Ensure it travels the full viewport width plus its own width before looping
+        x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Ensure it travels the full viewport width before looping
         duration: travelDuration,
         repeat: -1, // Infinite loop
         ease: "none",
         onRepeat: () => {
-            bubble.style.transform = 'translateX(' + window.innerWidth + 'px)'; // Immediately move to right of viewport for re-entry
+            // Instantly move the bubble to the right of the viewport for re-entry
+            gsap.set(bubble, { x: window.innerWidth });
         }
     });
 
