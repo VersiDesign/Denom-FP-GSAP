@@ -313,40 +313,31 @@ function animateClaimsTicker() {
 }
 
     // Bubble sequence
-function animateSingleBubble() {
+function animateSingleBubbleContinuousEntry() {
     const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
 
-    // Get viewport width plus the bubble width to calculate the full distance needed for the animation
-    const fullWidth = window.innerWidth + bubble.offsetWidth;
-    
-    // Randomize initial vertical position within a certain range
-    const startY = gsap.utils.random(-100, 100);
+    // Define the duration for the bubble to travel across the screen
+    const travelDuration = 20; // Duration in seconds
 
-    // Set an initial random Y position
-    gsap.set(bubble, { y: startY });
-
-    // Looping animation for the bubble
-    gsap.timeline({
+    // Animate the bubble
+    gsap.to(bubble, {
+        x: () => `-${window.innerWidth + bubble.offsetWidth}px`, // Target x position (off-screen to the left)
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % (window.innerWidth + bubble.offsetWidth * 2)) // Wrap around the screen
+        },
+        duration: travelDuration,
         repeat: -1, // Infinite loop
-        defaults: {ease: "none"},
+        ease: "none",
+        yoyo: true,
         onRepeat: () => {
-            // Immediately reset to start position (right of the viewport) when the animation repeats
-            gsap.set(bubble, { x: window.innerWidth });
+            // Adjust vertical position randomly on each loop
+            gsap.to(bubble, {
+                y: `+=${gsap.utils.random(-200, 200)}`, // Random vertical movement
+                duration: gsap.utils.random(2, 4), // Randomize the duration for vertical movement
+                ease: "sine.inOut"
+            });
         }
-    })
-    .set(bubble, { x: window.innerWidth }) // Start from the right of the viewport
-    .to(bubble, {
-        x: -bubble.offsetWidth, // Move to the left beyond the viewport
-        duration: 20, // Adjust the duration to control the speed
-        ease: "none"
-    })
-    .to(bubble, {
-        y: `+=${gsap.utils.random(-200, 200)}`, // Random Y movement
-        repeat: -1, // Repeat this part infinitely
-        yoyo: true, // Go back and forth
-        ease: "sine.inOut",
-        duration: gsap.utils.random(2, 4) // Random duration for the Y movement
-    }, 0); // Start the Y animation at the same time as the X animation
+    });
 }
 
     // Function to initialize all animations
@@ -362,7 +353,7 @@ function animateSingleBubble() {
         animateArrowsSection();
         animateClaimsTicker();
         animateClaimsTitle();
-        animateSingleBubble()();
+        animateSingleBubbleContinuousEntry();
     }
 
     setupAnimations(); // Call to initialize animations on page load
