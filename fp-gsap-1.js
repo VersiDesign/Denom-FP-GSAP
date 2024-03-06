@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.registerPlugin(ModifiersPlugin);
 
     // Initial opacity settings for animations
     gsap.set([
