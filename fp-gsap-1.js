@@ -367,50 +367,39 @@ function animateAllBubbles() {
     // Stat counter sequences
 function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent }) {
     const counter = document.querySelector(counterSelector);
-    let targetValue = parseFloat(counter.getAttribute('data-target'));
-    // Determine the number of decimal places in the target value
-    const decimalPlaces = (targetValue.toString().split('.')[1] || []).length;
+    const targetValue = parseFloat(counter.dataset.target);
 
+    // Setup ScrollTrigger
     ScrollTrigger.create({
         trigger: triggerSelector,
-        start: "top center",
-        end: "bottom top",
+        start: 'top center',
+        end: 'bottom top',
         onEnter: () => {
             gsap.to(counter, {
                 duration: animationDuration,
                 innerHTML: targetValue,
                 roundProps: "innerHTML",
                 ease: "power1.inOut",
-                snap: { innerHTML: 1 / Math.pow(10, decimalPlaces) }, // Adjust for correct rounding to decimal places
+                snap: { innerHTML: 0.1 },
                 onUpdate: function() {
-                    // Update the displayed value with the desired format and correct rounding
-                    const formattedValue = new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: decimalPlaces,
-                        maximumFractionDigits: decimalPlaces,
-                    }).format(this.targets()[0].innerHTML);
-                    counter.textContent = `${includePlus ? '+' : ''}${formattedValue}%`;
+                    counter.textContent = (includePlus ? '+' : '') + parseFloat(counter.innerHTML).toFixed(1) + '%';
                 }
             });
         },
         onLeaveBack: () => {
-            // Reset the counter to its starting state when the user scrolls back up
-            counter.textContent = `${includePlus ? '+' : ''}${startPercent.toFixed(decimalPlaces)}%`;
+            // Reset the counter text to its initial state
+            counter.textContent = (includePlus ? '+' : '') + startPercent + '%';
         },
         onEnterBack: () => {
-            // Optionally, replay the animation when re-entering the section from above
+            // Optionally, replay the animation when entering back
             gsap.to(counter, {
                 duration: animationDuration,
                 innerHTML: targetValue,
                 roundProps: "innerHTML",
                 ease: "power1.inOut",
-                snap: { innerHTML: 1 / Math.pow(10, decimalPlaces) }, // Adjust for correct rounding to decimal places
+                snap: { innerHTML: 0.1 },
                 onUpdate: function() {
-                    // Ensure consistent formatting during update
-                    const formattedValue = new Intl.NumberFormat('en-US', {
-                        minimumFractionDigits: decimalPlaces,
-                        maximumFractionDigits: decimalPlaces,
-                    }).format(this.targets()[0].innerHTML);
-                    counter.textContent = `${includePlus ? '+' : ''}${formattedValue}%`;
+                    counter.textContent = (includePlus ? '+' : '') + parseFloat(counter.innerHTML).toFixed(1) + '%';
                 }
             });
         }
@@ -437,7 +426,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           triggerSelector: '.fp-stats__section',
           includePlus: true,
           animationDuration: 2,
-          startPercent: 0
+          startPercent: 0.0
         });
 
     }
