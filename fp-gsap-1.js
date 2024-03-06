@@ -315,34 +315,33 @@ function ClaimsTicker() {
 
     // Bubbles sequence
     function floatBubbles() {
-    const bubbles = document.querySelectorAll('.fp-bubbles__circle-wrap--bbl-1, .fp-bubbles__circle-wrap--bbl-2, .fp-bubbles__circle-wrap--bbl-3, .fp-bubbles__circle-wrap--bbl-4, .fp-bubbles__circle-wrap--bbl-5, .fp-bubbles__circle-wrap--bbl-6');
+  const bubbles = document.querySelectorAll('.fp-bubbles__section > div');
 
-    bubbles.forEach(bubble => {
-        // Randomly set initial scale and opacity
-        gsap.set(bubble, {
-            scale: gsap.utils.random(0.5, 1.75),
-            opacity: gsap.utils.random(0.3, 1, 0.1),
-            x: `+=${window.innerWidth}` // Start off the right side of the viewport
-        });
+  bubbles.forEach((bubble) => {
+    // Random starting Y position
+    const startY = gsap.utils.random(-200, 200, 1);
+    // Random size between 200px and 350px
+    const size = gsap.utils.random(200, 350, 1);
+    // Set initial properties
+    gsap.set(bubble, { width: size, height: size, top: startY, x: '100%' });
 
-        // Continuous movement across the viewport
-        gsap.to(bubble, {
-            x: `-=${window.innerWidth + bubble.offsetWidth * 2}`, // Move leftward across and then beyond the viewport
-            duration: gsap.utils.random(15, 30), // Random duration for each bubble's trip
-            ease: "none",
-            repeat: -1, // Infinite loop
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) + window.innerWidth + bubble.offsetWidth * 2) // Wrap around to right side after moving left past viewport
-            },
-            onRepeat: () => {
-                // Randomize properties each loop
-                gsap.set(bubble, {
-                    scale: gsap.utils.random(0.5, 1.75),
-                    opacity: gsap.utils.random(0.3, 1, 0.1)
-                });
-            }
-        });
-    });
+    // Infinite loop animation
+    const tl = gsap.timeline({ repeat: -1 });
+
+    tl.to(bubble, {
+      x: () => `-${window.innerWidth + size}px`, // Move bubble from right to left of the viewport
+      duration: gsap.utils.random(20, 40), // Random duration for each bubble to complete the trip
+      ease: "none"
+    }).to(bubble, {
+      y: `+=${gsap.utils.random(-200, 200, true)}`, // Random Y movement
+      opacity: gsap.utils.random(0.3, 1, true), // Random opacity
+      scale: gsap.utils.random(0.5, 1, true), // Random scale
+      duration: gsap.utils.random(5, 10), // Duration for opacity and scale transition
+      ease: "sine.inOut",
+      repeat: 1,
+      yoyo: true
+    }, 0);
+  });
 }
 
     // Function to initialize all animations
