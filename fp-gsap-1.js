@@ -312,15 +312,13 @@ function animateClaimsTicker() {
   });
 }
 
-// Bubble sequence
-function animateSingleBubbleContinuousEntry() {
-    const bubble = document.querySelector('.fp-bubbles__circle-wrap--bbl-1');
-
+// Function to animate a single bubble
+function animateBubble(bubble) {
     // Ensure the bubble starts from the right of the screen
     gsap.set(bubble, { x: `+=${window.innerWidth}px` });
 
     // Define the duration for the bubble to travel across the screen
-    const travelDuration = 20; // Duration in seconds
+    const travelDuration = gsap.utils.random(15, 25); // Randomize duration for more natural movement
 
     // Horizontal movement
     const moveHorizontally = () => {
@@ -335,14 +333,20 @@ function animateSingleBubbleContinuousEntry() {
 
     // Vertical movement with random Y position
     gsap.to(bubble, {
-        y: `+=${gsap.utils.random(-200, 200)}`, 
-        duration: () => gsap.utils.random(2, 4), 
+        y: `+=${gsap.utils.random(-100, 100)}`, 
+        duration: () => gsap.utils.random(5, 10), 
         ease: "sine.inOut",
         repeat: -1, 
         yoyo: true
     });
 
     moveHorizontally(); // Start the horizontal movement
+}
+
+// Apply the animation to each bubble
+function animateAllBubbles() {
+    const bubbles = document.querySelectorAll('.fp-bubbles__circle-wrap--bbl-1, .fp-bubbles__circle-wrap--bbl-2, .fp-bubbles__circle-wrap--bbl-3, .fp-bubbles__circle-wrap--bbl-4, .fp-bubbles__circle-wrap--bbl-5, .fp-bubbles__circle-wrap--bbl-6');
+    bubbles.forEach(bubble => animateBubble(bubble));
 }
 
     // Function to initialize all animations
@@ -358,7 +362,7 @@ function animateSingleBubbleContinuousEntry() {
         animateArrowsSection();
         animateClaimsTicker();
         animateClaimsTitle();
-        animateSingleBubbleContinuousEntry();
+        animateAllBubbles();
     }
 
     setupAnimations(); // Call to initialize animations on page load
