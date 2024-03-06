@@ -325,6 +325,7 @@ function ClaimsTicker() {
         animateGapSection();
         animateArrowsSection();
         ClaimsTicker();
+        animateClaimsTitle();
     }
 
     setupAnimations(); // Call to initialize animations on page load
