@@ -365,37 +365,32 @@ function animateAllBubbles() {
 }
 
     // Stat counter sequences
-function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent }) {
+// Stat counter animation with improved formatting to reduce flicker
+function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent, decimalPlaces = 1 }) {
     const counter = document.querySelector(counterSelector);
     const targetValue = parseFloat(counter.getAttribute('data-target'));
+    let formatCounter = value => `${includePlus ? '+' : ''}${value.toFixed(decimalPlaces)}%`;
 
-    // Debugging: Enable markers to see the trigger points
+    // Set the initial value
+    counter.innerHTML = formatCounter(startPercent);
+
     ScrollTrigger.create({
         trigger: triggerSelector,
         start: 'top center',
-        end: 'bottom+=500% center',
-        onEnter: () => animateCounter(counter, targetValue, includePlus, animationDuration),
-        onLeave: () => {}, // Define if needed
-        onLeaveBack: () => resetCounter(counter, startPercent, includePlus),
-        onEnterBack: () => animateCounter(counter, targetValue, includePlus, animationDuration),
-    });
-}
-
-function animateCounter(counter, targetValue, includePlus, duration) {
-    gsap.to(counter, {
-        duration: duration,
-        innerHTML: targetValue,
-        roundProps: "innerHTML",
-        ease: "power1.inOut",
-        snap: { innerHTML: 0.1 },
-        onUpdate: () => {
-            counter.textContent = `${includePlus ? '+' : ''}${counter.textContent}%`;
+        end: "bottom top",
+        onEnter: () => {
+            gsap.to({}, {
+                duration: animationDuration,
+                onUpdate: function () {
+                    let currentValue = gsap.utils.interpolate(startPercent, targetValue, this.progress());
+                    counter.innerHTML = formatCounter(currentValue);
+                }
+            });
+        },
+        onLeaveBack: () => {
+            counter.innerHTML = formatCounter(startPercent); // Reset to initial value
         }
     });
-}
-
-function resetCounter(counter, startPercent, includePlus) {
-    counter.textContent = `${includePlus ? '+' : ''}${startPercent}%`;
 }
 
     // Function to initialize all animations
