@@ -314,11 +314,15 @@ function animateClaimsTicker() {
 
 // Floating bubbles
 function animateBubble(bubble) {
+    // Check if it's a mobile device
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
     // Ensure the bubble starts from the right of the screen
     gsap.set(bubble, { x: `+=${window.innerWidth}px` });
 
-    // Define the duration for the bubble to travel across the screen
-    const travelDuration = gsap.utils.random(15, 35); // Randomize duration for more natural movement
+    // Adjust duration and Y movement range for mobile
+    const travelDuration = isMobile ? gsap.utils.random(10, 25) : gsap.utils.random(15, 45); // Shorter duration for mobile
+    const yRange = isMobile ? gsap.utils.random(200, -100) : gsap.utils.random(420, -190); // Smaller range for mobile
 
     // Horizontal movement
     const moveHorizontally = () => {
@@ -331,10 +335,10 @@ function animateBubble(bubble) {
             });
     };
 
-    // Vertical movement with random Y position
+    // Vertical movement with random Y position adjusted for mobile
     gsap.to(bubble, {
-        y: `+=${gsap.utils.random(420, -190)}`, 
-        duration: () => gsap.utils.random(10, 20), 
+        y: `+=${yRange}`, 
+        duration: () => gsap.utils.random(5, 10), // Adjusted duration for mobile
         ease: "sine.inOut",
         repeat: -1, 
         yoyo: true
@@ -343,8 +347,8 @@ function animateBubble(bubble) {
     // Randomize scale and opacity for the '.fp-circle__empty--rl' within the bubble
     const innerCircle = bubble.querySelector('.fp-circle__empty--rl');
     gsap.to(innerCircle, {
-        scale: () => gsap.utils.random(0.6, 1.6), // Random scale between 0.5 and 1.5
-        opacity: () => gsap.utils.random(0.3, 1), // Random opacity between 0.5 and 1
+        scale: () => gsap.utils.random(0.6, 1.6), // Random scale
+        opacity: () => gsap.utils.random(0.3, 1), // Random opacity
         duration: () => gsap.utils.random(5, 18), // Random duration for the scale and opacity transition
         repeat: -1,
         yoyo: true,
