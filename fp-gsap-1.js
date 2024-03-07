@@ -424,7 +424,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     // Bars sequence
     function animateBarsSection() {
-    // Setup ScrollTrigger for the .fp-bars__section
+    // Trigger for fading in the title with scrub
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-bars__section',
@@ -433,19 +433,24 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
             scrub: 1,
             reverse: true,
         }
-    })
-    // Fade in the title
-    .from('.fp-bars__title-wrap', { 
+    }).from('.fp-bars__title-wrap', { 
         autoAlpha: 0, 
         duration: 0.5, 
         ease: 'power1.inOut'
-    })
-    // Scale up the .fp-bars__bar-max to its final width
-    .from('.fp-bars__bar-max', { 
-        width: '0%', 
-        duration: 2, 
-        ease: 'none'
-    }, '-=0.5') // Starts slightly before the previous animation ends
+    });
+
+    // Directly scale up the .fp-bars__bar-max when the section enters the viewport
+    ScrollTrigger.create({
+        trigger: '.fp-bars__section',
+        start: 'top 90%',
+        onEnter: () => {
+            gsap.from('.fp-bars__bar-max', {
+                width: '0%',
+                duration: 2,
+                ease: 'none'
+            });
+        }
+    });
 }
 
     // Function to initialize all animations
