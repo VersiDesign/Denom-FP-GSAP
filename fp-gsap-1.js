@@ -446,7 +446,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.from('.fp-bars__bar-max', {
                 width: '0%',
-                duration: 2.3,
+                duration: 2.5,
                 ease: 'power1.inOut'
             });
         }
