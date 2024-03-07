@@ -380,7 +380,6 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.to({}, {
                 duration: animationDuration,
-                ease: "power4.inOut",
                 onUpdate: function () {
                     let currentValue = gsap.utils.interpolate(startPercent, targetValue, this.progress());
                     counter.innerHTML = formatCounter(currentValue);
@@ -437,7 +436,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     }).from('.fp-bars__title-wrap', { 
         autoAlpha: 0, 
         duration: 0.5, 
-        ease: 'power4.inOut'
+        ease: 'power1.inOut'
     });
 
     // Directly scale up the .fp-bars__bar-max when the section enters the viewport
@@ -447,8 +446,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.from('.fp-bars__bar-max', {
                 width: '0%',
-                duration: 3.3,
-                ease: 'power2.inOut'
+                duration: 2.3,
+                ease: 'power1.inOut'
             });
         }
     });
@@ -502,7 +501,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           counterSelector: '#barCounter',
           triggerSelector: '.fp-bars__section',
           includePlus: true,
-          animationDuration: 3,
+          animationDuration: 2,
           startPercent: 0,
           decimalPlaces: 0
         });
