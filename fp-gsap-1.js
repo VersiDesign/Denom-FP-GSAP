@@ -375,7 +375,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     ScrollTrigger.create({
         trigger: triggerSelector,
-        start: 'top 90%',
+        start: 'top 80%',
         end: "bottom top",
         onEnter: () => {
             gsap.to({}, {
@@ -398,7 +398,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     const statsSection = gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-stats__section',
-            start: 'top 90%',
+            start: 'top 80%',
             end: 'center center',
             scrub: 1,
             reverse: true,
@@ -428,7 +428,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-bars__section',
-            start: 'top 90%',
+            start: 'top 70%',
             end: 'center center',
             scrub: 1,
             reverse: true,
@@ -442,7 +442,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     // Directly scale up the .fp-bars__bar-max when the section enters the viewport
     ScrollTrigger.create({
         trigger: '.fp-bars__section',
-        start: 'top 90%',
+        start: 'top 70%',
         onEnter: () => {
             gsap.from('.fp-bars__bar-max', {
                 width: '0%',
