@@ -446,8 +446,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.from('.fp-bars__bar-max', {
                 width: '0%',
-                duration: 2.5,
-                ease: 'power3.inOut'
+                duration: 2.8,
+                ease: 'power2.inOut'
             });
         }
     });
