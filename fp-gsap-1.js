@@ -440,7 +440,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         trigger: '.fp-bars__section',
         start: 'top 90%',
         end: 'center center',
-        scrub: 1,
+        scrub: true,
         onEnter: () => gsap.set('.fp-bars__bar-max', { width: 0 }), // Ensure bar starts from 0 width
         onUpdate: self => {
             // Calculate current progress and update counter and bar width accordingly
