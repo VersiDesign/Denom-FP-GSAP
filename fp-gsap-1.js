@@ -424,36 +424,28 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     // Bars sequence
     function animateBarsSection() {
-    // Target elements
-    const counter = document.querySelector('#barCounter');
-    const targetValue = parseFloat(counter.getAttribute('data-target'));
-    const startPercent = 0; // Assuming 0 as starting value, adjust if needed
-
-    // Format function for counter, adjust as needed
-    let formatCounter = value => `+${Math.round(value)}%`;
-
-    // Initialize the counter with its starting value
-    counter.innerHTML = formatCounter(startPercent);
-
-    // ScrollTrigger for the entire section
-    ScrollTrigger.create({
-        trigger: '.fp-bars__section',
-        start: 'top 90%',
-        end: 'center center',
-        scrub: true,
-        onEnter: () => gsap.set('.fp-bars__bar-max', { width: 0 }), // Ensure bar starts from 0 width
-        onUpdate: self => {
-            // Calculate current progress and update counter and bar width accordingly
-            let progress = self.progress; // Progress: 0 at start, 1 at end
-            let currentWidth = progress * 100; // Assuming full width is 100%, adjust if .fp-bars__bar-max scales differently
-            let currentValue = progress * targetValue;
-
-            // Update bar width and counter value
-            gsap.to('.fp-bars__bar-max', { width: `${currentWidth}%`, immediateRender: false });
-            counter.innerHTML = formatCounter(currentValue);
-        },
-        onLeaveBack: () => counter.innerHTML = formatCounter(startPercent), // Reset counter on reverse
-    });
+    // Setup ScrollTrigger for the .fp-bars__section
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: '.fp-bars__section',
+            start: 'top 90%',
+            end: 'center center',
+            scrub: 1,
+            reverse: true,
+        }
+    })
+    // Fade in the title
+    .from('.fp-bars__title-wrap', { 
+        autoAlpha: 0, 
+        duration: 0.5, 
+        ease: 'power1.inOut'
+    })
+    // Scale up the .fp-bars__bar-max to its final width
+    .from('.fp-bars__bar-max', { 
+        width: '0%', 
+        duration: 2, 
+        ease: 'none'
+    }, '-=0.5') // Starts slightly before the previous animation ends
 }
 
     // Function to initialize all animations
@@ -496,6 +488,15 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           triggerSelector: '.fp-stats__section',
           includePlus: false,
           animationDuration: 3,
+          startPercent: 0,
+          decimalPlaces: 0
+        });
+
+        statCounterAnimation({
+          counterSelector: '#barCounter',
+          triggerSelector: '.fp-bars__section',
+          includePlus: true,
+          animationDuration: 2,
           startPercent: 0,
           decimalPlaces: 0
         });
