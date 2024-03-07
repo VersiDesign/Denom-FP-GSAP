@@ -399,18 +399,28 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     const statsSection = gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-stats__section',
-            start: 'top center',
-            end: 'bottom center',
+            start: 'top 90%', // Adjust these start/end values as needed
+            end: 'center center',
             scrub: 1,
             reverse: true,
         },
     });
 
     // Fade in the title with specificity to avoid affecting other elements with the same class
-    statsSection.from('.fp-stats__section .fp-title--italic', { autoAlpha: 0, duration: 0.5, ease: 'power1.inOut' });
+    statsSection.from('.fp-stats__section .fp-title--italic', { 
+        autoAlpha: 0, 
+        duration: 0.5, 
+        ease: 'power1.inOut' 
+    });
 
-    // Fade in each column one by one
-    statsSection.from('.fp-stats__section .fp-stats__col', { autoAlpha: 0, duration: 0.5, ease: 'power1.inOut', stagger: 0.2 });
+    // Fade in and slide up each column one by one
+    statsSection.from('.fp-stats__section .fp-stats__col', { 
+        autoAlpha: 0, 
+        y: 50, // Moves up from 50 pixels below
+        duration: 0.5, 
+        ease: 'power1.out', 
+        stagger: 0.2 
+    });
 }
 
     // Function to initialize all animations
