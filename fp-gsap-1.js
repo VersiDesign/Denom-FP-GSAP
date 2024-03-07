@@ -447,7 +447,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
             gsap.from('.fp-bars__bar-max', {
                 width: '0%',
                 duration: 2.5,
-                ease: 'power1.inOut'
+                ease: 'power3.inOut'
             });
         }
     });
