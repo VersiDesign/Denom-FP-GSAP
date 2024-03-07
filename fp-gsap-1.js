@@ -466,6 +466,15 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           decimalPlaces: 0
         });
 
+        statCounterAnimation({
+          counterSelector: '#barCounter',
+          triggerSelector: '.fp-bars__section',
+          includePlus: true,
+          animationDuration: 3,
+          startPercent: 0,
+          decimalPlaces: 0
+        });
+
     }
 
     setupAnimations(); // Call to initialize animations on page load
