@@ -365,7 +365,6 @@ function animateAllBubbles() {
 }
 
     // Stat counter sequences
-// Stat counter animation with improved formatting to reduce flicker
 function statCounterAnimation({ counterSelector, triggerSelector, includePlus, animationDuration, startPercent, decimalPlaces = 1 }) {
     const counter = document.querySelector(counterSelector);
     const targetValue = parseFloat(counter.getAttribute('data-target'));
@@ -425,28 +424,36 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     // Bars sequence
     function animateBarsSection() {
-    // Setup ScrollTrigger for the .fp-bars__section
+    const barMax = document.querySelector('.fp-bars__bar-max');
+    const counter = document.querySelector('#barCounter');
+    const targetValue = parseFloat(counter.getAttribute('data-target'));
+    let formatCounter = value => `+${Math.round(value)}%`; // Adjusted for simplicity, modify as needed
+
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-bars__section',
-            start: 'top 90%',
-            end: 'center center',
+            start: 'top center',
+            end: 'bottom center',
             scrub: 1,
             reverse: true,
         }
     })
-    // Fade in the title
     .from('.fp-bars__title-wrap', { 
         autoAlpha: 0, 
         duration: 0.5, 
         ease: 'power1.inOut'
     })
-    // Scale up the .fp-bars__bar-max to its final width
-    .from('.fp-bars__bar-max', { 
+    .from(barMax, { 
         width: '0%', 
         duration: 2, 
-        ease: 'none'
-    }, '-=0.5') // Starts slightly before the previous animation ends
+        ease: 'none',
+        onUpdate: () => {
+            // Update the counter based on the current progress of the barMax animation
+            const progress = gsap.getProperty(barMax, 'scaleX');
+            const currentValue = progress * targetValue; // Calculate current value based on progress
+            counter.innerHTML = formatCounter(currentValue);
+        }
+    }, '-=0.5'); // Ensures bar starts scaling slightly before the title animation ends
 }
 
     // Function to initialize all animations
@@ -489,15 +496,6 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           triggerSelector: '.fp-stats__section',
           includePlus: false,
           animationDuration: 3,
-          startPercent: 0,
-          decimalPlaces: 0
-        });
-
-        statCounterAnimation({
-          counterSelector: '#barCounter',
-          triggerSelector: '.fp-bars__section',
-          includePlus: true,
-          animationDuration: 2,
           startPercent: 0,
           decimalPlaces: 0
         });
