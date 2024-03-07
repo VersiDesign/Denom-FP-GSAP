@@ -375,7 +375,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     ScrollTrigger.create({
         trigger: triggerSelector,
-        start: 'top 80%',
+        start: 'top 70%',
         end: "bottom top",
         onEnter: () => {
             gsap.to({}, {
@@ -398,7 +398,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     const statsSection = gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-stats__section',
-            start: 'top 80%',
+            start: 'top 70%',
             end: 'center center',
             scrub: 1,
             reverse: true,
@@ -424,7 +424,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     // Bars sequence
     function animateBarsSection() {
-    // Trigger for fading in the title with scrub
+    // Trigger for fading in the section with scrub
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-bars__section',
@@ -433,7 +433,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
             scrub: 1,
             reverse: true,
         }
-    }).from('.fp-bars__title-wrap', { 
+    }).from('.fp-bars__section', { 
         autoAlpha: 0, 
         duration: 0.5, 
         ease: 'power1.inOut'
