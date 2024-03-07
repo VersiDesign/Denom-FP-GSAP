@@ -376,7 +376,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     ScrollTrigger.create({
         trigger: triggerSelector,
-        start: 'top 80%',
+        start: 'top bottom',
         end: "bottom top",
         onEnter: () => {
             gsap.to({}, {
