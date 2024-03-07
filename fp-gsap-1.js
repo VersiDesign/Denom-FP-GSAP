@@ -438,8 +438,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     // ScrollTrigger for the entire section
     ScrollTrigger.create({
         trigger: '.fp-bars__section',
-        start: 'top center',
-        end: 'bottom center',
+        start: 'top 90%',
+        end: 'center center',
         scrub: 1,
         onEnter: () => gsap.set('.fp-bars__bar-max', { width: 0 }), // Ensure bar starts from 0 width
         onUpdate: self => {
