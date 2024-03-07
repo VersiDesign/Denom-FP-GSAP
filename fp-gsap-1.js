@@ -423,6 +423,37 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     });
 }
 
+    // Bars sequence
+    function animateBarsSection() {
+    // Setup ScrollTrigger for the .fp-bars__section
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: '.fp-bars__section',
+            start: 'top 90%',
+            end: 'center center',
+            scrub: 1,
+            reverse: true,
+        }
+    })
+    // Fade in the title
+    .from('.fp-bars__title-wrap', { 
+        autoAlpha: 0, 
+        duration: 0.5, 
+        ease: 'power1.inOut'
+    })
+    // Scale up the bars simultaneously
+    .from('.fp-bars__bar-1', { 
+        width: '0%', 
+        duration: 2, 
+        ease: 'none'
+    }, '<')
+    .from('.fp-bars__bar-2', { 
+        width: '0%', 
+        duration: 2, 
+        ease: 'none'
+    }, '<') 
+}
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -438,6 +469,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         animateClaimsTitle();
         animateAllBubbles();
         animateStatsSection();
+        animateBarsSection();
 
         statCounterAnimation({
           counterSelector: '#esgCounter',
@@ -470,7 +502,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           counterSelector: '#barCounter',
           triggerSelector: '.fp-bars__section',
           includePlus: true,
-          animationDuration: 3,
+          animationDuration: 2,
           startPercent: 0,
           decimalPlaces: 0
         });
