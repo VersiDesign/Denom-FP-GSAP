@@ -424,36 +424,36 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
 
     // Bars sequence
     function animateBarsSection() {
-    const barMax = document.querySelector('.fp-bars__bar-max');
+    // Target elements
     const counter = document.querySelector('#barCounter');
     const targetValue = parseFloat(counter.getAttribute('data-target'));
-    let formatCounter = value => `+${Math.round(value)}%`; // Adjusted for simplicity, modify as needed
+    const startPercent = 0; // Assuming 0 as starting value, adjust if needed
 
-    gsap.timeline({
-        scrollTrigger: {
-            trigger: '.fp-bars__section',
-            start: 'top center',
-            end: 'bottom center',
-            scrub: 1,
-            reverse: true,
-        }
-    })
-    .from('.fp-bars__title-wrap', { 
-        autoAlpha: 0, 
-        duration: 0.5, 
-        ease: 'power1.inOut'
-    })
-    .from(barMax, { 
-        width: '0%', 
-        duration: 2, 
-        ease: 'none',
-        onUpdate: () => {
-            // Update the counter based on the current progress of the barMax animation
-            const progress = gsap.getProperty(barMax, 'scaleX');
-            const currentValue = progress * targetValue; // Calculate current value based on progress
+    // Format function for counter, adjust as needed
+    let formatCounter = value => `+${Math.round(value)}%`;
+
+    // Initialize the counter with its starting value
+    counter.innerHTML = formatCounter(startPercent);
+
+    // ScrollTrigger for the entire section
+    ScrollTrigger.create({
+        trigger: '.fp-bars__section',
+        start: 'top center',
+        end: 'bottom center',
+        scrub: 1,
+        onEnter: () => gsap.set('.fp-bars__bar-max', { width: 0 }), // Ensure bar starts from 0 width
+        onUpdate: self => {
+            // Calculate current progress and update counter and bar width accordingly
+            let progress = self.progress; // Progress: 0 at start, 1 at end
+            let currentWidth = progress * 100; // Assuming full width is 100%, adjust if .fp-bars__bar-max scales differently
+            let currentValue = progress * targetValue;
+
+            // Update bar width and counter value
+            gsap.to('.fp-bars__bar-max', { width: `${currentWidth}%`, immediateRender: false });
             counter.innerHTML = formatCounter(currentValue);
-        }
-    }, '-=0.5'); // Ensures bar starts scaling slightly before the title animation ends
+        },
+        onLeaveBack: () => counter.innerHTML = formatCounter(startPercent), // Reset counter on reverse
+    });
 }
 
     // Function to initialize all animations
