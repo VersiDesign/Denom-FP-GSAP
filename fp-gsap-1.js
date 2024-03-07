@@ -393,6 +393,26 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     });
 }
 
+    // Stats section fade in
+    function animateStatsSection() {
+    // Target the .fp-stats__section and its children
+    const statsSection = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.fp-stats__section',
+            start: 'top center',
+            end: 'bottom center',
+            scrub: 1,
+            reverse: true,
+        },
+    });
+
+    // Fade in the title with specificity to avoid affecting other elements with the same class
+    statsSection.from('.fp-stats__section .fp-title--italic', { autoAlpha: 0, duration: 0.5, ease: 'power1.inOut' });
+
+    // Fade in each column one by one
+    statsSection.from('.fp-stats__section .fp-stats__col', { autoAlpha: 0, duration: 0.5, ease: 'power1.inOut', stagger: 0.2 });
+}
+
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -407,6 +427,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         animateClaimsTicker();
         animateClaimsTitle();
         animateAllBubbles();
+        animateStatsSection();
 
         statCounterAnimation({
           counterSelector: '#esgCounter',
