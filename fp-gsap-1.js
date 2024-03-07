@@ -399,7 +399,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     const statsSection = gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-stats__section',
-            start: 'top 90%', // Adjust these start/end values as needed
+            start: 'top 90%',
             end: 'center center',
             scrub: 1,
             reverse: true,
@@ -429,8 +429,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-bars__section',
-            start: 'top center',
-            end: 'bottom center',
+            start: 'top 90%',
+            end: 'center center',
             scrub: 1,
             reverse: true,
         }
