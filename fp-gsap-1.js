@@ -429,8 +429,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-bars__section',
-            start: 'top 90%',
-            end: 'center center',
+            start: 'top center',
+            end: 'bottom center',
             scrub: 1,
             reverse: true,
         }
@@ -441,17 +441,12 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         duration: 0.5, 
         ease: 'power1.inOut'
     })
-    // Scale up the bars simultaneously
-    .from('.fp-bars__bar-1', { 
+    // Scale up the .fp-bars__bar-max to its final width
+    .from('.fp-bars__bar-max', { 
         width: '0%', 
         duration: 2, 
         ease: 'none'
-    }, '<')
-    .from('.fp-bars__bar-2', { 
-        width: '0%', 
-        duration: 2, 
-        ease: 'none'
-    }, '<') 
+    }, '-=0.5') // Starts slightly before the previous animation ends
 }
 
     // Function to initialize all animations
