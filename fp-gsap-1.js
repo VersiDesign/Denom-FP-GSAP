@@ -380,7 +380,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.to({}, {
                 duration: animationDuration,
-                ease: "power1.inOut", // Updated easing to 'power1.inOut'
+                ease: "power2.inOut",
                 onUpdate: function () {
                     let currentValue = gsap.utils.interpolate(startPercent, targetValue, this.progress());
                     counter.innerHTML = formatCounter(currentValue);
@@ -447,8 +447,8 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.from('.fp-bars__bar-max', {
                 width: '0%',
-                duration: 2,
-                ease: 'power1.inOut'
+                duration: 2.2,
+                ease: 'power2.inOut'
             });
         }
     });
