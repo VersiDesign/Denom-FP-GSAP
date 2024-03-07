@@ -380,6 +380,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         onEnter: () => {
             gsap.to({}, {
                 duration: animationDuration,
+                ease: "power1.inOut", // Updated easing to 'power1.inOut'
                 onUpdate: function () {
                     let currentValue = gsap.utils.interpolate(startPercent, targetValue, this.progress());
                     counter.innerHTML = formatCounter(currentValue);
