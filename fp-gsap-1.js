@@ -412,7 +412,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           counterSelector: '#esgCounter',
           triggerSelector: '.fp-stats__section',
           includePlus: true,
-          animationDuration: 2,
+          animationDuration: 3,
           startPercent: 0.0,
           decimalPlaces: 1
         });
@@ -421,7 +421,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           counterSelector: '#csrCounter',
           triggerSelector: '.fp-stats__section',
           includePlus: false,
-          animationDuration: 2,
+          animationDuration: 3,
           startPercent: 0,
           decimalPlaces: 0
         });
@@ -430,7 +430,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           counterSelector: '#csr2Counter',
           triggerSelector: '.fp-stats__section',
           includePlus: false,
-          animationDuration: 2,
+          animationDuration: 3,
           startPercent: 0,
           decimalPlaces: 0
         });
