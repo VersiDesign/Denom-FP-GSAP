@@ -7,37 +7,29 @@ document.addEventListener("DOMContentLoaded", function() {
         ".fp-pkg__txt-wrap"
     ], {opacity: 0});
 
-    // Setup general animations for the page
-    function setupGeneralAnimations(isMobile) {
-        if (isMobile) {
-            // Mobile-specific animations
-            gsap.timeline()
-                .from(".fp-20yrs__wrap", { x: -window.innerWidth, ease: "power1.out", duration: 1.5, delay: 1 })
-                .to(".fp-20yrs-txt-fade", { opacity: 1, duration: 1 }, "-=0.5")
-                .to(".fp-pkg__txt-wrap", { opacity: 1, duration: 1 }, "+=0.5");
-        } else {
-            // Desktop animations
-            gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".fp-20yrs__section",
-                    start: "top 85%",
-                    end: "bottom 70%",
-                    scrub: 1,
-                    toggleActions: "restart pause reverse pause"
-                }
-            })
-            .from(".fp-20yrs__wrap", { x: -window.innerWidth, ease: "power1.out", duration: 1.5 })
-            .to(".fp-20yrs-txt-fade", { opacity: 1, duration: 1 }, "-=0.5");
-
-            ScrollTrigger.create({
-                trigger: ".fp-pkg-title__section",
-                start: "top 80%",
-                end: "bottom 80%",
-                onEnter: () => gsap.to(".fp-pkg__txt-wrap", { opacity: 1, duration: 2 }),
-                onLeaveBack: () => gsap.to(".fp-pkg__txt-wrap", { opacity: 0, duration: 1 })
-            });
+    // Intro animations
+    function setupGeneralAnimations() {
+    // General (previously desktop) animations applied for all devices
+    gsap.timeline({
+        scrollTrigger: {
+            trigger: ".fp-20yrs__section",
+            start: "top 85%",
+            end: "bottom 70%",
+            scrub: 1,
+            toggleActions: "restart pause reverse pause"
         }
-    }
+    })
+    .from(".fp-20yrs__wrap", { x: -window.innerWidth, ease: "power1.out", duration: 1.5 }) 
+    .to(".fp-20yrs-txt-fade", { opacity: 1, duration: 1 }, "-=0.5");
+
+    ScrollTrigger.create({
+        trigger: ".fp-pkg-title__section",
+        start: "top 80%",
+        end: "bottom 80%",
+        onEnter: () => gsap.to(".fp-pkg__txt-wrap", { opacity: 1, duration: 2 }),
+        onLeaveBack: () => gsap.to(".fp-pkg__txt-wrap", { opacity: 0, duration: 1 })
+    });
+}
 
     // Setup diagram animation
     function setupDiagramAnimation(startPoint) {
@@ -456,7 +448,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
-        setupGeneralAnimations(isMobile);
+        setupGeneralAnimations();
         setupDiagramAnimation(isMobile ? "top 80%" : "top 60%");
         animateCircleWithSection();
         animateSequentialFadeIns();
