@@ -498,6 +498,33 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
           decimalPlaces: 0
         });
 
+        statCounterAnimation({
+          counterSelector: '#case-ww1-Counter',
+          triggerSelector: '.fp-case__stats',
+          includePlus: false,
+          animationDuration: 3,
+          startPercent: 0,
+          decimalPlaces: 1
+        });
+
+        statCounterAnimation({
+          counterSelector: '#case-ww2-Counter',
+          triggerSelector: '.fp-case__stats',
+          includePlus: false,
+          animationDuration: 3,
+          startPercent: 0,
+          decimalPlaces: 0
+        });
+
+        statCounterAnimation({
+          counterSelector: '#case-ww3-Counter',
+          triggerSelector: '.fp-case__stats',
+          includePlus: false,
+          animationDuration: 3,
+          startPercent: 0,
+          decimalPlaces: 0
+        });
+
     }
 
     setupAnimations(); // Call to initialize animations on page load
