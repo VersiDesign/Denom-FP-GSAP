@@ -48,9 +48,9 @@ function setupDiagramAnimation(startPoint) {
         pkgDiagramTimeline.from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__circle${i}`, {
             scale: 0, duration: 2, transformOrigin: "center center"
         }, `+=0.5`)
-        // Animate the arrows to scale up in height from 0, without specifying transformOrigin
+        // Animate the arrows to scale up in height from 0 with the origin set to the top
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow`, {
-            scaleY: 0, duration: 1
+            scaleY: 0, duration: 1, transformOrigin: "top center"
         }, `-=${0.5}`)
         // Animate the labels to fade in
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
