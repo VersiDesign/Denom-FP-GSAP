@@ -38,7 +38,7 @@ function setupDiagramAnimation() {
             trigger: ".fp-pkg-diagram__section",
             start: "top 50%",
             end: "top 25%",
-            scrub: 1.5,
+            scrub: 2,
             toggleActions: "restart pause reverse pause"
         }
     });
@@ -48,7 +48,7 @@ function setupDiagramAnimation() {
             scale: 0, duration: 3, transformOrigin: "center center"
         }, `+=0.5`)
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow`, {
-            scaleY: 0, duration: 2, transformOrigin: "top center"
+            scaleY: 0, duration: 3, transformOrigin: "top center"
         }, `-=${0.5}`)
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
             opacity: 0, duration: 1
