@@ -31,27 +31,33 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 }
 
-    // Setup diagram animation
-    function setupDiagramAnimation(startPoint) {
-        let pkgDiagramTimeline = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".fp-pkg-diagram__section",
-                start: startPoint,
-                end: "bottom bottom",
-                scrub: 1,
-                toggleActions: "restart pause reverse pause"
-            }
-        });
-
-        for (let i = 1; i <= 6; i++) {
-            pkgDiagramTimeline.from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__circle${i}`, {
-                scale: 0, duration: 2, transformOrigin: "center center"
-            }, `+=0.5`)
-            .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow, .fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
-                opacity: 0, duration: 1
-            }, `-=${0.5}`);
+    // Bubble diagram sequence
+function setupDiagramAnimation(startPoint) {
+    let pkgDiagramTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".fp-pkg-diagram__section",
+            start: startPoint,
+            end: "bottom bottom",
+            scrub: 1,
+            toggleActions: "restart pause reverse pause"
         }
+    });
+
+    for (let i = 1; i <= 6; i++) {
+        // Animate the circles to scale up from 0
+        pkgDiagramTimeline.from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__circle${i}`, {
+            scale: 0, duration: 2, transformOrigin: "center center"
+        }, `+=0.5`)
+        // Animate the arrows to scale up in height from 0, without specifying transformOrigin
+        .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow`, {
+            scaleY: 0, duration: 1
+        }, `-=${0.5}`)
+        // Animate the labels to fade in
+        .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
+            opacity: 0, duration: 1
+        }, `-=${0.5}`);
     }
+}
 
     // Animation for circle within the semi-circle section
     function animateCircleWithSection() {
