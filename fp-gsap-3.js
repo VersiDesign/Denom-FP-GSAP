@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // Bubble diagram sequence
-function setupDiagramAnimation(startPoint) {
+function setupDiagramAnimation() {
     let pkgDiagramTimeline = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-pkg-diagram__section",
-            start: startPoint,
+            start: "top 80%", // Animation starts when the top of .fp-pkg-diagram__section is 80% from the top of the viewport
             end: "bottom bottom",
             scrub: 1,
             toggleActions: "restart pause reverse pause"
@@ -44,15 +44,12 @@ function setupDiagramAnimation(startPoint) {
     });
 
     for (let i = 1; i <= 6; i++) {
-        // Animate the circles to scale up from 0
         pkgDiagramTimeline.from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__circle${i}`, {
             scale: 0, duration: 2, transformOrigin: "center center"
         }, `+=0.5`)
-        // Animate the arrows to scale up in height from 0 with the origin set to the top
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow`, {
             scaleY: 0, duration: 1, transformOrigin: "top center"
         }, `-=${0.5}`)
-        // Animate the labels to fade in
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
             opacity: 0, duration: 1
         }, `-=${0.5}`);
