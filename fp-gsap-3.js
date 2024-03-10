@@ -45,10 +45,10 @@ function setupDiagramAnimation() {
 
     for (let i = 1; i <= 6; i++) {
         pkgDiagramTimeline.from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__circle${i}`, {
-            scale: 0, duration: 2, transformOrigin: "center center"
+            scale: 0, duration: 3, transformOrigin: "center center"
         }, `+=0.5`)
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow`, {
-            scaleY: 0, duration: 1, transformOrigin: "top center"
+            scaleY: 0, duration: 2, transformOrigin: "top center"
         }, `-=${0.5}`)
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
             opacity: 0, duration: 1
