@@ -37,8 +37,8 @@ function setupDiagramAnimation() {
         scrollTrigger: {
             trigger: ".fp-pkg-diagram__section",
             start: "top 50%",
-            end: "top 20%",
-            scrub: 1,
+            end: "top 25%",
+            scrub: 1.5,
             toggleActions: "restart pause reverse pause"
         }
     });
