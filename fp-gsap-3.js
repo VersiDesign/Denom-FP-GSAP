@@ -239,12 +239,10 @@ function animateGapSection() {
 
     // Curved arrows sequence
     function animateArrowsSection() {
-    // Target elements
-    const leftArrow = '.fp-arrow--left';
-    const rightArrow = '.fp-arrow--right';
-    const textWrap = '.fp-arrows__txt-wrap';
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    // ScrollTrigger for the entire sequence
+    const timelineStart = isMobile ? 0.5 : 0; // Start later on mobile
+
     gsap.timeline({
         scrollTrigger: {
             trigger: '.fp-arrows__section',
@@ -254,25 +252,20 @@ function animateGapSection() {
             toggleActions: 'play none none reverse',
         }
     })
-    // Fade in and rotate left arrow
-    .from(leftArrow, {
+    .from('.fp-arrow--left', {
         rotation: -90,
         opacity: 0,
         ease: 'power1.inOut',
-    }, 0)
-
-    // Fade in and rotate right arrow
-    .from(rightArrow, {
+    }, timelineStart) // Use timelineStart for mobile adjustment
+    .from('.fp-arrow--right', {
         rotation: 90,
         opacity: 0,
         ease: 'power1.inOut',
-    }, 0)
-
-    // Fade in the text wrap in sync with the arrows
-    .from(textWrap, {
+    }, timelineStart) // Use timelineStart for mobile adjustment
+    .from('.fp-arrows__txt-wrap', {
         opacity: 0,
         ease: 'power1.inOut',
-    }, 0.5);
+    }, timelineStart + 0.5); // Adjust based on timelineStart
 }
 
     // Claims Ticker sequence
