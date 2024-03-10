@@ -32,12 +32,19 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
     // Bubble diagram sequence
+// Bubble diagram sequence
 function setupDiagramAnimation() {
+    // Check if it's a mobile device
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    let startPercent = isMobile ? "top 75%" : "top 65%";
+    let endPercent = isMobile ? "top 25%" : "top 15%";
+
     let pkgDiagramTimeline = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-pkg-diagram__section",
-            start: "top 65%",
-            end: "top 15%",
+            start: startPercent,
+            end: endPercent,
             scrub: 1,
             toggleActions: "restart pause reverse pause"
         }
