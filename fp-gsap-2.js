@@ -463,16 +463,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         animateBarsSection();
 
         statCounterAnimation({
-          counterSelector: '#esgCounter',
-          triggerSelector: '.fp-stats__section',
-          includePlus: true,
-          animationDuration: 3,
-          startPercent: 0.0,
-          decimalPlaces: 1
-        });
-
-        statCounterAnimation({
-          counterSelector: '#csrCounter',
+          counterSelector: '#kantarCounter',
           triggerSelector: '.fp-stats__section',
           includePlus: false,
           animationDuration: 3,
@@ -481,7 +472,16 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         });
 
         statCounterAnimation({
-          counterSelector: '#csr2Counter',
+          counterSelector: '#gartnerCounter',
+          triggerSelector: '.fp-stats__section',
+          includePlus: false,
+          animationDuration: 3,
+          startPercent: 0,
+          decimalPlaces: 0
+        });
+
+        statCounterAnimation({
+          counterSelector: '#pwcCounter',
           triggerSelector: '.fp-stats__section',
           includePlus: false,
           animationDuration: 3,
