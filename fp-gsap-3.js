@@ -121,7 +121,7 @@ function setupDiagramAnimation() {
 
         // Slightly reduce the delay for '.fp-semicirc__caption-down'
         if (selector === '.fp-semicirc__caption-down') {
-            delayTime -= 1;
+            delayTime -= 2;
         }
 
         gsap.from(selector, {
