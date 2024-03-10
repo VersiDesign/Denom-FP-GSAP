@@ -116,12 +116,12 @@ function setupDiagramAnimation() {
 
         // Slightly increase the delay for '.fp-title--lg-italic'
         if (selector === '.fp-title--lg-italic') {
-            delayTime += 2; // Adjust this value as needed to slightly delay the fade-in
+            delayTime += 2;
         }
 
         // Slightly reduce the delay for '.fp-semicirc__caption-down'
         if (selector === '.fp-semicirc__caption-down') {
-            delayTime -= 1.5; // Adjust this value as needed to reduce the delay
+            delayTime -= 1;
         }
 
         gsap.from(selector, {
