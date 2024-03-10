@@ -37,8 +37,8 @@ function setupDiagramAnimation() {
     // Check if it's a mobile device
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    let startPercent = isMobile ? "top 75%" : "top 65%";
-    let endPercent = isMobile ? "top 25%" : "top 15%";
+    let startPercent = isMobile ? "top 80%" : "top 65%";
+    let endPercent = isMobile ? "top 40%" : "top 15%";
 
     let pkgDiagramTimeline = gsap.timeline({
         scrollTrigger: {
