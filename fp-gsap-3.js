@@ -305,55 +305,52 @@ function animateClaimsTicker() {
 }
 
 // Floating bubbles
-function animateBubble(bubble, startDelay = 0) {
-    // Check if it's a mobile device
+function animateBubble(bubble, delay = 0) {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-    // Set an initial delay before starting the animation
-    gsap.set(bubble, { delay: startDelay });
-
-    // Ensure the bubble starts from the right of the screen
     gsap.set(bubble, { x: `+=${window.innerWidth}px` });
 
-    // Adjust duration and Y movement range for mobile
-    const travelDuration = isMobile ? gsap.utils.random(10, 25) : gsap.utils.random(15, 45); // Shorter duration for mobile
-    const yRange = isMobile ? gsap.utils.random(200, -100) : gsap.utils.random(420, -190); // Smaller range for mobile
+    const travelDuration = isMobile ? gsap.utils.random(10, 25) : gsap.utils.random(15, 45);
+    const yRange = isMobile ? gsap.utils.random(200, -100) : gsap.utils.random(420, -190);
 
-    // Horizontal movement with a delay
+    // Horizontal movement with delay
     const moveHorizontally = () => {
         gsap.fromTo(bubble, 
             { x: window.innerWidth }, 
             { x: -bubble.offsetWidth, 
-              delay: startDelay, // Apply the start delay here
               duration: travelDuration, 
               ease: "none",
-              onComplete: moveHorizontally // Call itself to create an infinite loop
+              delay: delay, // Apply the stagger delay here
+              onComplete: moveHorizontally
             });
     };
 
-    // Vertical movement with random Y position adjusted for mobile
+    // Vertical movement with random Y position and delay
     gsap.to(bubble, {
         y: `+=${yRange}`, 
-        duration: () => gsap.utils.random(5, 10), // Adjusted duration for mobile
+        duration: () => gsap.utils.random(5, 10),
         ease: "sine.inOut",
         repeat: -1, 
         yoyo: true,
-        delay: startDelay // Apply the start delay here
+        delay: delay // Apply the stagger delay here
     });
 
-    // Randomize scale and opacity for the '.fp-circle__empty--rl' within the bubble
     const innerCircle = bubble.querySelector('.fp-circle__empty--rl');
     gsap.to(innerCircle, {
-        scale: () => gsap.utils.random(0.6, 1.6), // Random scale
-        opacity: () => gsap.utils.random(0.3, 1), // Random opacity
-        duration: () => gsap.utils.random(5, 18), // Random duration for the scale and opacity transition
+        scale: () => gsap.utils.random(0.6, 1.6),
+        opacity: () => gsap.utils.random(0.3, 1),
+        duration: () => gsap.utils.random(5, 18),
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: startDelay // Apply the start delay here
+        delay: delay // Apply the stagger delay here
     });
 
-    moveHorizontally(); // Start the horizontal movement after the delay
+    // Delay only applies to the first cycle of the animation
+    if (delay > 0) {
+        setTimeout(moveHorizontally, delay * 1000); // Convert seconds to milliseconds
+    } else {
+        moveHorizontally(); // Start immediately if no delay
+    }
 }
 
 // Apply the animation to each bubble
