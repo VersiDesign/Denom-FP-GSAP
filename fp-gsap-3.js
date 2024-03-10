@@ -361,7 +361,7 @@ function animateAllBubbles() {
     const bubbles = document.querySelectorAll('.fp-bubbles__circle-wrap--bbl-1, .fp-bubbles__circle-wrap--bbl-2, .fp-bubbles__circle-wrap--bbl-3, .fp-bubbles__circle-wrap--bbl-4, .fp-bubbles__circle-wrap--bbl-5, .fp-bubbles__circle-wrap--bbl-6');
     bubbles.forEach(bubble => {
         // Generate a random start delay for each bubble, e.g., between 0 and x seconds
-        const startDelay = gsap.utils.random(0, 10, false);
+        const startDelay = gsap.utils.random(0, 12, false);
         animateBubble(bubble, startDelay);
     });
 }
