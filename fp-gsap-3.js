@@ -208,7 +208,10 @@ function setupDiagramAnimation() {
 }
 
     // Gap circles sequence
-    function animateGapSection() {
+function animateGapSection() {
+    // Check if it's a mobile device
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
     // Set initial opacity for all elements
     gsap.set([".fp-gap__circle-wrap--left", ".fp-gap__circle-wrap--right", ".fp-gap__txt-wrap", ".fp-circle-txt"], { opacity: 0 });
 
@@ -219,8 +222,7 @@ function setupDiagramAnimation() {
             start: "top center",
             end: "top -20%",
             scrub: 1
-        },
-        delay: 5 // Delay the start of the timeline
+        }
     });
 
     // Fade in circles together
@@ -231,7 +233,8 @@ function setupDiagramAnimation() {
       // Fade in text inside circles
       .to(".fp-circle-txt", { opacity: 1, duration: 1, ease: "power1.inOut" }, "2")
       // Fade in '.fp-gap__txt-wrap' when the circles are midway through their movement
-      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 2, ease: "power1.inOut" }, "3");
+      // Add conditional delay for mobile devices
+      .to(".fp-gap__txt-wrap", { opacity: 1, duration: 2, ease: "power1.inOut" }, isMobile ? "5" : "3");
 }
 
     // Curved arrows sequence
