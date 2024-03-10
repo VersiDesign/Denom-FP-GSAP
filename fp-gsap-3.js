@@ -459,7 +459,7 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
         setupGeneralAnimations();
-        setupDiagramAnimation(isMobile ? "top 80%" : "top 60%");
+        setupDiagramAnimation();
         animateCircleWithSection();
         animateSequentialFadeIns();
         centerCircleHorizontallyAndMoveDown();
