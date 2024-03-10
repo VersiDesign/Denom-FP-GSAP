@@ -37,7 +37,7 @@ function setupDiagramAnimation() {
         scrollTrigger: {
             trigger: ".fp-pkg-diagram__section",
             start: "top 80%", // Animation starts when the top of .fp-pkg-diagram__section is 80% from the top of the viewport
-            end: "bottom bottom",
+            end: "top 10%",
             scrub: 1,
             toggleActions: "restart pause reverse pause"
         }
