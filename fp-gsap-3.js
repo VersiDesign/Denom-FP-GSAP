@@ -36,7 +36,7 @@ function setupDiagramAnimation() {
     let pkgDiagramTimeline = gsap.timeline({
         scrollTrigger: {
             trigger: ".fp-pkg-diagram__section",
-            start: "top 70%",
+            start: "top 65%",
             end: "top 20%",
             scrub: 1,
             toggleActions: "restart pause reverse pause"
