@@ -241,7 +241,7 @@ function animateGapSection() {
     function animateArrowsSection() {
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    const timelineStart = isMobile ? 0.5 : 0; // Start later on mobile
+    const timelineStart = isMobile ? 1 : 0; // Start later on mobile
 
     gsap.timeline({
         scrollTrigger: {
