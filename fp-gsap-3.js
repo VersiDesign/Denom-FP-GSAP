@@ -47,7 +47,7 @@ function setupDiagramAnimation() {
         pkgDiagramTimeline.from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__circle${i}`, {
             scale: 0, duration: 3, transformOrigin: "center center"
         }, `+=0.5`)
-        .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__diagram-arrow`, {
+        .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-line--vert`, {
             scaleY: 0, duration: 3, transformOrigin: "top center"
         }, `-=${0.5}`)
         .from(`.fp-pkg-diagram__section .fp-pkg__diagram-pt${i}-wrap .fp-pkg__label`, {
