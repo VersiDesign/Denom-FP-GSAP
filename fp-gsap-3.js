@@ -456,19 +456,6 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
     });
 }
 
-    // Rotate bottle sequence
-    function adjustBottlePosition() {
-    ScrollTrigger.create({
-        trigger: '.fp-case__ww-bottle-wrap',
-        start: 'top center',
-        end: 'bottom center',
-        onEnter: () => gsap.to('.fp-case__ww-bottle', { rotation: -10, immediateRender: false, ease: 'none', duration: 0.1 }),
-        onEnterBack: () => gsap.to('.fp-case__ww-bottle', { rotation: -10, immediateRender: false, ease: 'none', duration: 0.1 }),
-        onLeave: () => gsap.set('.fp-case__ww-bottle', { clearProps: 'rotation' }),
-        onLeaveBack: () => gsap.set('.fp-case__ww-bottle', { clearProps: 'rotation' }),
-    });
-}
-
     // Function to initialize all animations
     function setupAnimations() {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
@@ -485,7 +472,6 @@ function statCounterAnimation({ counterSelector, triggerSelector, includePlus, a
         animateAllBubbles();
         animateStatsSection();
         animateBarsSection();
-        adjustBottlePosition()
 
         statCounterAnimation({
           counterSelector: '#kantarCounter',
