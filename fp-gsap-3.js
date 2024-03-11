@@ -178,17 +178,15 @@ function setupDiagramAnimation() {
             });
         },
         onLeaveBack: (self) => {
-            if (!self.isActive) {
-                // Reset the circle's position and opacity when scrolling back
-                gsap.to(circle3, {
-                    x: 0,
-                    y: 0, // Reset Y position as well
-                    opacity: 1, // Reset opacity to fully visible
-                    ease: "power1.inOut",
-                    duration: 1
-                });
-            }
-        }
+    if (!self.isActive) {
+        // Reset the circle's position and opacity by clearing GSAP styles
+        gsap.to(circle3, {
+            clearProps: "all", // This removes all inline styles applied by GSAP, potentially resetting the element to its original CSS state
+            ease: "power1.inOut",
+            duration: 1
+        });
+    }
+}
     });
 }
 
